@@ -1,0 +1,8 @@
+<div style="display: flex; justify-content: space-between;">
+  <div style="display: flex; flex-direction: column;">
+    <p style="margin: 0" *ngFor="let m of data.messages"> - {{ m }}</p>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <button matButton matSnackBarAction (click)="snackBarRef.dismiss()">Entendido</button>
+  </div>
+</div>

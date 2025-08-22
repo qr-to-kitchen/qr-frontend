@@ -1,0 +1,14 @@
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px;">
+  <h1 style="margin: 0">Iniciar Sesión</h1>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Usuario</mat-label>
+    <input matInput [(ngModel)]="loginDto.username">
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Contraseña</mat-label>
+    <input matInput type="password" [(ngModel)]="loginDto.password">
+  </mat-form-field>
+  <button matButton="filled" (click)="onSubmit()">
+    Iniciar Sesión
+  </button>
+</div>

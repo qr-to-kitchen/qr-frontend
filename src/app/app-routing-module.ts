@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {Login} from './login/login';
-import {PageNotFound} from './page-not-found/page-not-found';
+import {Login} from './security/pages/login/login';
+import {PageNotFound} from './shared/pages/page-not-found/page-not-found';
 
 const routes: Routes = [
   { path: 'login', component: Login },
