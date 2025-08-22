@@ -1,6 +1,10 @@
-<mat-toolbar style="background-color: #1e40af">
-  <div style="width: 100%; display: flex; justify-content: center;">
-    <p style="margin: 0; color: white">Quoro</p>
+<div style="display: flex; flex-direction: column; height: 100vh">
+  <mat-toolbar style="background-color: #1e40af">
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <p style="margin: 0; color: white">Quoro</p>
+    </div>
+  </mat-toolbar>
+  <div style="flex: 1">
+    <router-outlet/>
   </div>
-</mat-toolbar>
-<router-outlet/>
+</div>

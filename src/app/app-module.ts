@@ -5,16 +5,20 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import {MatToolbar} from '@angular/material/toolbar';
 import { Login } from './login/login';
+import { PageNotFound } from './page-not-found/page-not-found';
+import {MatButton} from '@angular/material/button';
 
 @NgModule({
   declarations: [
     App,
-    Login
+    Login,
+    PageNotFound
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatToolbar
+    MatToolbar,
+    MatButton
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
