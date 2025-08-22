@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../../environment/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +13,14 @@ export class Base<T> {
 
   handleError(error: HttpErrorResponse): Observable<never> {
     return throwError(() => error.error);
+  }
+
+  getObject(): Observable<T> {
+    return this.http.get<T>(`${this.basePath}/my`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    }).pipe(catchError(this.handleError));
   }
 }

@@ -13,13 +13,19 @@ import {FormsModule} from '@angular/forms';
 import {provideHttpClient} from '@angular/common/http';
 import { ErrorSnackBar } from './shared/pages/error-snack-bar/error-snack-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HomePrincipal } from './core/pages/home-principal/home-principal';
+import { HomeAdmin } from './core/pages/home-admin/home-admin';
+import { HomeBranch } from './core/pages/home-branch/home-branch';
 
 @NgModule({
   declarations: [
     App,
     Login,
     PageNotFound,
-    ErrorSnackBar
+    ErrorSnackBar,
+    HomePrincipal,
+    HomeAdmin,
+    HomeBranch
   ],
   imports: [
     BrowserModule,
