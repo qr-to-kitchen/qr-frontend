@@ -3,14 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import {MatToolbar} from '@angular/material/toolbar';
+import { Login } from './login/login';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    Login
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatToolbar
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
