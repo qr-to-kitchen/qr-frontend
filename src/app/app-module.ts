@@ -16,6 +16,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HomePrincipal } from './core/pages/home-principal/home-principal';
 import { HomeAdmin } from './core/pages/home-admin/home-admin';
 import { HomeBranch } from './core/pages/home-branch/home-branch';
+import { ForgetPassword } from './security/pages/forget-password/forget-password';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { HomeBranch } from './core/pages/home-branch/home-branch';
     ErrorSnackBar,
     HomePrincipal,
     HomeAdmin,
-    HomeBranch
+    HomeBranch,
+    ForgetPassword
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { HomeBranch } from './core/pages/home-branch/home-branch';
     MatFormFieldModule,
     MatInput,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule,
+    MatCheckbox
   ],
   providers: [
     provideHttpClient(),

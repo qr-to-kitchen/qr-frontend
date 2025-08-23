@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import {Login} from './security/pages/login/login';
 import {PageNotFound} from './shared/pages/page-not-found/page-not-found';
 import {HomePrincipal} from './core/pages/home-principal/home-principal';
+import {ForgetPassword} from './security/pages/forget-password/forget-password';
 
 const routes: Routes = [
   { path: 'login', component: Login },
+  { path: 'forget-password', component: ForgetPassword },
   { path: 'home/:role', component: HomePrincipal },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
