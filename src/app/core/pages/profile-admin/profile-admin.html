@@ -1,0 +1,109 @@
+@if (dataLoaded) {
+  <div style="display: flex; flex-direction: column; height: 100%; gap: 16px; align-items: center;">
+    <mat-card style="margin-top: 10px">
+      <mat-card-header style="display: flex; align-items: center;">
+        <div mat-card-avatar style="display: flex; justify-content: center; align-items: center; margin: 0">
+          <mat-icon>person</mat-icon>
+        </div>
+        <mat-card-title>{{ user.username }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon>email</mat-icon>
+            <span>{{ user.email }}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <mat-icon>store</mat-icon>
+            <span>{{ restaurant.name }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-tab-group style="width: 90%;">
+      <mat-tab label="Usuario">
+        <div class="tab-content">
+          <mat-card style="margin: 10px; padding: 10px">
+            <mat-card-title>Información de usuario</mat-card-title>
+            <mat-card-subtitle>Puedes actualizar correo y nombre de usuario</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px;">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="userToUpdate.email"/>
+              </mat-form-field>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Nombre de usuario</mat-label>
+                <input matInput [(ngModel)]="userToUpdate.username"/>
+              </mat-form-field>
+              <div style="display: flex; align-items: center; gap: 16px">
+                <button matButton="filled" [disabled]="userSaving" (click)="onUpdateUser()">
+                  <mat-icon>save</mat-icon>
+                  <span>Guardar</span>
+                </button>
+                @if (userSaving) {
+                  <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+                }
+              </div>
+            </div>
+          </mat-card>
+
+          <mat-card style="margin: 10px; padding: 10px">
+            <mat-card-title>Detalles</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>badge</mat-icon>
+                <div matListItemTitle>Rol</div>
+                <div matListItemLine>{{ user.role }}</div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Restaurante">
+        <div class="tab-content">
+          <mat-card style="margin: 10px; padding: 10px">
+            <mat-card-title>Información del restaurante</mat-card-title>
+            <mat-card-subtitle>Puedes actualizar el nombre del restaurante</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 15px;">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Nombre del restaurante</mat-label>
+                <input matInput [(ngModel)]="restaurantToUpdate.name"/>
+              </mat-form-field>
+              <div style="display: flex; align-items: center; gap: 16px">
+                <button matButton="filled" [disabled]="restaurantSaving" (click)="onUpdateRestaurant()">
+                  <mat-icon>save</mat-icon>
+                  <span>Guardar</span>
+                </button>
+                @if (userSaving) {
+                  <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+                }
+              </div>
+            </div>
+          </mat-card>
+
+          <mat-card style="margin: 10px; padding: 10px">
+            <mat-card-title>Detalles</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>tag</mat-icon>
+                <div matListItemTitle>ID</div>
+                <div matListItemLine>{{ restaurant.id }}</div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+} @else {
+  <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+}

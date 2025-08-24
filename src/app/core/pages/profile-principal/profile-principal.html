@@ -1,0 +1,10 @@
+<div style="height: 100%;">
+  @switch (role) {
+    @case ('ADMIN') {
+      <app-profile-admin [role]="role"></app-profile-admin>
+    }
+    @case ('BRANCH') {
+      <app-profile-branch [role]="role"></app-profile-branch>
+    }
+  }
+</div>

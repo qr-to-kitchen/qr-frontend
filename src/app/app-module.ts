@@ -19,6 +19,15 @@ import { HomeBranch } from './core/pages/home-branch/home-branch';
 import { ForgetPassword } from './security/pages/forget-password/forget-password';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatCheckbox} from '@angular/material/checkbox';
+import { ProfilePrincipal } from './core/pages/profile-principal/profile-principal';
+import { ProfileAdmin } from './core/pages/profile-admin/profile-admin';
+import { ProfileBranch } from './core/pages/profile-branch/profile-branch';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDivider} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -29,7 +38,10 @@ import {MatCheckbox} from '@angular/material/checkbox';
     HomePrincipal,
     HomeAdmin,
     HomeBranch,
-    ForgetPassword
+    ForgetPassword,
+    ProfilePrincipal,
+    ProfileAdmin,
+    ProfileBranch
   ],
   imports: [
     BrowserModule,
@@ -41,7 +53,13 @@ import {MatCheckbox} from '@angular/material/checkbox';
     FormsModule,
     MatSnackBarModule,
     MatStepperModule,
-    MatCheckbox
+    MatCheckbox,
+    MatProgressSpinner,
+    MatCardModule,
+    MatIconModule,
+    MatTabsModule,
+    MatDivider,
+    MatListModule
   ],
   providers: [
     provideHttpClient(),
