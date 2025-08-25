@@ -34,6 +34,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CreateUserBranchDialog } from './admin/dialogs/create-user-branch.dialog/create-user-branch.dialog';
+import { ManageDishes } from './admin/pages/manage-dishes/manage-dishes';
+import { CreateDishDialog } from './admin/dialogs/create-dish.dialog/create-dish.dialog';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { CreateUserBranchDialog } from './admin/dialogs/create-user-branch.dialo
     ProfileAdmin,
     ProfileBranch,
     ManageBranches,
-    CreateUserBranchDialog
+    CreateUserBranchDialog,
+    ManageDishes,
+    CreateDishDialog
   ],
   imports: [
     BrowserModule,

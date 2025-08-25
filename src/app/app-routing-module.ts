@@ -6,6 +6,7 @@ import {HomePrincipal} from './core/pages/home-principal/home-principal';
 import {ForgetPassword} from './security/pages/forget-password/forget-password';
 import {ProfilePrincipal} from './core/pages/profile-principal/profile-principal';
 import {ManageBranches} from './admin/pages/manage-branches/manage-branches';
+import {ManageDishes} from './admin/pages/manage-dishes/manage-dishes';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'home/:role', component: HomePrincipal },
   { path: 'profile/:role', component: ProfilePrincipal },
   { path: 'manage-branches', component: ManageBranches },
+  { path: 'manage-dishes', component: ManageDishes },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];
