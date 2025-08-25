@@ -1,9 +1,10 @@
 <div style="display: flex; flex-direction: column; height: 100%">
   <div style="flex: 1;"></div>
   <div style="display: flex; align-items: center; flex-direction: column; gap: 8px;">
-    <h1>Página de Inicio de Administrador de Restaurante</h1>
-    <div>
+    <h1 style="text-align: center; line-height: normal;">Página de Inicio de Administrador de Restaurante</h1>
+    <div style="display: flex; gap: 8px;">
       <button matButton="filled" [routerLink]="['/profile', role]">Gestionar Perfil y Restaurante</button>
+      <button matButton="filled" [routerLink]="['/manage-branches']">Gestionar Sedes</button>
     </div>
   </div>
   <div style="flex: 1; display: flex; justify-content: end; align-items: end">

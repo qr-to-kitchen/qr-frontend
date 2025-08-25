@@ -20,6 +20,6 @@ export class UserService extends Base<UserApiResponse>{
       headers: {
         'Content-Type': 'application/json',
       }
-    }).pipe(catchError(this.handleError))
+    }).pipe(catchError(this.handleError));
   }
 }

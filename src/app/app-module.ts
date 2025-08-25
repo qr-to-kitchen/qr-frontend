@@ -6,7 +6,7 @@ import { App } from './app';
 import {MatToolbar} from '@angular/material/toolbar';
 import { Login } from './security/pages/login/login';
 import { PageNotFound } from './shared/pages/page-not-found/page-not-found';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
@@ -28,6 +28,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDivider} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { ManageBranches } from './admin/pages/manage-branches/manage-branches';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTableModule} from '@angular/material/table';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CreateUserBranchDialog } from './admin/dialogs/create-user-branch.dialog/create-user-branch.dialog';
 
 @NgModule({
   declarations: [
@@ -41,7 +47,9 @@ import {MatListModule} from '@angular/material/list';
     ForgetPassword,
     ProfilePrincipal,
     ProfileAdmin,
-    ProfileBranch
+    ProfileBranch,
+    ManageBranches,
+    CreateUserBranchDialog
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,12 @@ import {MatListModule} from '@angular/material/list';
     MatIconModule,
     MatTabsModule,
     MatDivider,
-    MatListModule
+    MatListModule,
+    MatIconButton,
+    MatSidenavModule,
+    MatTableModule,
+    MatTooltip,
+    MatDialogModule
   ],
   providers: [
     provideHttpClient(),

@@ -1,0 +1,39 @@
+<div style="width: min(500px, 90vw);">
+  <h2 mat-dialog-title>Nuevo usuario y sede</h2>
+  <mat-dialog-content>
+    <mat-tab-group mat-stretch-tabs="false">
+      <mat-tab label="Usuario">
+        <div class="tab-content">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin: 10px">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="data.user.email"/>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin: 10px">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput [(ngModel)]="data.user.username"/>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin: 10px">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [(ngModel)]="data.user.password">
+          </mat-form-field>
+        </div>
+      </mat-tab>
+      <mat-tab label="Sede">
+        <div class="tab-content">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin: 10px">
+            <mat-label>Dirección de la sede</mat-label>
+            <input matInput [(ngModel)]="data.branch.address"/>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="creating">Cancelar</button>
+    <button matButton="filled" [disabled]="creating" (click)="onCreateBranchWithUser()">
+      <mat-icon>save</mat-icon>
+      <span>Crear</span>
+    </button>
+  </mat-dialog-actions>
+</div>
+
