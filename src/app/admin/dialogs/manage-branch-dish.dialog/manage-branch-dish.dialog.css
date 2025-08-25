@@ -1,0 +1,19 @@
+.bd-dish {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.bd-dish-image {
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 800px) {
+  .bd-dish {
+    grid-template-columns: 1fr;
+  }
+  .bd-dish-image {
+    justify-content: start;
+  }
+}

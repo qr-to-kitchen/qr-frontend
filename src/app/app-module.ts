@@ -36,6 +36,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CreateUserBranchDialog } from './admin/dialogs/create-user-branch.dialog/create-user-branch.dialog';
 import { ManageDishes } from './admin/pages/manage-dishes/manage-dishes';
 import { CreateDishDialog } from './admin/dialogs/create-dish.dialog/create-dish.dialog';
+import { ManageBranchDishDialog } from './admin/dialogs/manage-branch-dish.dialog/manage-branch-dish.dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { CreateDishDialog } from './admin/dialogs/create-dish.dialog/create-dish
     ManageBranches,
     CreateUserBranchDialog,
     ManageDishes,
-    CreateDishDialog
+    CreateDishDialog,
+    ManageBranchDishDialog
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import { CreateDishDialog } from './admin/dialogs/create-dish.dialog/create-dish
     MatSidenavModule,
     MatTableModule,
     MatTooltip,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ],
   providers: [
     provideHttpClient(),

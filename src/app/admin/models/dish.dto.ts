@@ -7,4 +7,5 @@ export interface DishDto {
   basePrice: number;
   restaurant: RestaurantDto;
   restaurantId: number;
+  imageUrl: string;
 }

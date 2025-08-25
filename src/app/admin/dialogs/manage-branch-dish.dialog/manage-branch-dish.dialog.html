@@ -1,0 +1,81 @@
+<div style="width: min(700px, 90vw);">
+  <h2 mat-dialog-title style="display: flex; align-items: center; gap: 12px;">
+    <mat-icon>restaurant_menu</mat-icon>
+    <span>Disponibilidad</span>
+  </h2>
+  <mat-dialog-content style="display: flex; flex-direction: column; gap: 16px;">
+    <mat-card style="padding: 16px">
+      <div class="bd-dish">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-weight: 700; font-size: 18px;">{{ data.dish.name }}</span>
+          <span>{{ data.dish.description }}</span>
+          <div>
+            <span>Precio base: <strong>${{ data.dish.basePrice }}</strong></span>
+          </div>
+        </div>
+        <div class="bd-dish-image">
+          <div style="width: 100px; height: 100px; border: 1px solid #e3e3e3; display: flex; align-items: center; justify-content: center;">
+            @if (data.dish.imageUrl !== '') {
+              <img [src]="data.dish.imageUrl" alt="Imagen del plato" style="width: 100%; height: 100%; object-fit: cover;"/>
+            } @else {
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <mat-icon>image</mat-icon>
+                <span>Sin imagen</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    @if (dataLoaded) {
+      <div style="overflow: auto;">
+        <table mat-table [dataSource]="branchesDishes">
+          <ng-container matColumnDef="branch">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;">Sede</th>
+            <td mat-cell *matCellDef="let b">
+              <div style="font-weight: 600;">{{ b.branch.address }}</div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;">Estado</th>
+            <td mat-cell *matCellDef="let b">
+              <mat-chip style="margin-top: 8px" (click)="onChangeAvailability(b)">
+                <mat-icon matChipAvatar>{{ b.isAvailable ? 'check_circle' : b.id ? 'radio_button_unchecked' : 'radio_button_unchecked' }}</mat-icon>
+                {{ b.isAvailable ? 'Disponible' : b.id ? 'No Disponible' : 'No agregado' }}
+              </mat-chip>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;">Precio</th>
+            <td mat-cell *matCellDef="let b">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-top: 8px">
+                <mat-label>Opcional</mat-label>
+                <span matTextPrefix>S/.&nbsp;</span>
+                <input matInput type="number" min="0" [(ngModel)]="b.customPrice" (ngModelChange)="onBranchDishChanged(b)"/>
+                <mat-hint>Si lo dejas vacío, se usará {{ data.dish.basePrice }}</mat-hint>
+              </mat-form-field>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right; font-weight: 600; background: #f5f5f5;">Acciones</th>
+            <td mat-cell *matCellDef="let b" class="bd-actions-cell">
+                <button matButton="filled" [disabled]="!b.changed" (click)="onSaveBranchDish(b)">
+                  <mat-icon>save</mat-icon>
+                  <span>Guardar cambios</span>
+                </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    } @else {
+      <div style="display: flex; justify-content: center; margin: 10px 0">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="savingBranchDish">Cerrar</button>
+  </mat-dialog-actions>
+</div>

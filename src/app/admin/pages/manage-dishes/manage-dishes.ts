@@ -11,6 +11,7 @@ import {ErrorMessage} from '../../../shared/models/error-message';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {MatSidenav} from '@angular/material/sidenav';
 import {CreateDishDialog} from '../../dialogs/create-dish.dialog/create-dish.dialog';
+import {ManageBranchDishDialog} from '../../dialogs/manage-branch-dish.dialog/manage-branch-dish.dialog';
 
 @Component({
   selector: 'app-manage-dish',
@@ -121,5 +122,17 @@ export class ManageDishes implements OnInit {
         this.savingDish = false;
       }
     });
+  }
+
+  manageBranchDish(dish: DishDto) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.maxWidth = '800px';
+    dialogConfig.data = {
+      dish: dish,
+      restaurantId: this.restaurantId,
+    };
+
+    this.dialog.open(ManageBranchDishDialog, dialogConfig);
   }
 }
