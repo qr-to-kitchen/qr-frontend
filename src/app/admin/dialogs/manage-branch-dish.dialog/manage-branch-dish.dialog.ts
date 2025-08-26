@@ -26,7 +26,7 @@ export class ManageBranchDishDialog implements OnInit {
 
   branchesDishes: BranchDishDto[] = [];
 
-  displayedColumns: string[] = ['branch','status','price','actions'];
+  displayedColumns: string[] = ['branch', 'status', 'price', 'actions'];
 
   constructor(
     private branchService: BranchService,
