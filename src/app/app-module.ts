@@ -40,6 +40,10 @@ import { ManageBranchDishDialog } from './admin/dialogs/manage-branch-dish.dialo
 import {MatChipsModule} from '@angular/material/chips';
 import { ManageDishesBranch } from './branch/pages/manage-dishes-branch/manage-dishes-branch';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import { ManageExtras } from './admin/pages/manage-extras/manage-extras';
+import { CreateExtraDialog } from './admin/dialogs/create-extra.dialog/create-extra.dialog';
+import { ManageExtraBranchDialog } from './admin/dialogs/manage-extra-branch.dialog/manage-extra-branch.dialog';
+import { ManageExtraBranchDishesDialog } from './admin/dialogs/manage-extra-branch-dishes.dialog/manage-extra-branch-dishes.dialog';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,11 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
     ManageDishes,
     CreateDishDialog,
     ManageBranchDishDialog,
-    ManageDishesBranch
+    ManageDishesBranch,
+    ManageExtras,
+    CreateExtraDialog,
+    ManageExtraBranchDialog,
+    ManageExtraBranchDishesDialog
   ],
   imports: [
     BrowserModule,

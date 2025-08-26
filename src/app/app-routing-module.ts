@@ -8,6 +8,7 @@ import {ProfilePrincipal} from './core/pages/profile-principal/profile-principal
 import {ManageBranches} from './admin/pages/manage-branches/manage-branches';
 import {ManageDishes} from './admin/pages/manage-dishes/manage-dishes';
 import {ManageDishesBranch} from './branch/pages/manage-dishes-branch/manage-dishes-branch';
+import {ManageExtras} from './admin/pages/manage-extras/manage-extras';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'manage-branches', component: ManageBranches },
   { path: 'manage-dishes', component: ManageDishes },
   { path: 'manage-dishes-branch', component: ManageDishesBranch },
+  { path: 'manage-extras', component: ManageExtras },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];

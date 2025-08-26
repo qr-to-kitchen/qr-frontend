@@ -1,0 +1,19 @@
+<div style="width: min(550px, 90vw);">
+  <h2 mat-dialog-title>Nuevo extra</h2>
+  <mat-dialog-content>
+    <div style="margin: 10px 0">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="data.extra.name" />
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="creating">Cancelar</button>
+    <button matButton="filled" [disabled]="creating" (click)="onCreateExtra()">
+      <mat-icon>save</mat-icon>
+      <span>Crear</span>
+    </button>
+  </mat-dialog-actions>
+</div>
+

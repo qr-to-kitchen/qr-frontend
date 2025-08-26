@@ -1,0 +1,61 @@
+<div style="width: min(700px, 90vw);">
+  <h2 mat-dialog-title style="display: flex; align-items: center; gap: 12px;">
+    <mat-icon>restaurant_menu</mat-icon>
+    <span>Disponibilidad</span>
+  </h2>
+  <mat-dialog-content style="display: flex; flex-direction: column; gap: 16px;">
+    <mat-card style="padding: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-weight: 700; font-size: 18px;">{{ data.extra.name }}</span>
+        </div>
+    </mat-card>
+    @if (dataLoaded) {
+      <div style="overflow: auto;">
+        <table mat-table [dataSource]="extraBranches">
+          <ng-container matColumnDef="branch">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;">Sede</th>
+            <td mat-cell *matCellDef="let e">
+              <span style="font-weight: 600;">{{ e.branch.address }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;">Estado</th>
+            <td mat-cell *matCellDef="let e">
+              <mat-chip>
+                <mat-icon matChipAvatar>{{ e.id ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+                {{ e.id ? 'Disponible' : 'No Disponible' }}
+              </mat-chip>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right; font-weight: 600; background: #f5f5f5;">Acciones</th>
+            <td mat-cell *matCellDef="let e" class="bd-actions-cell">
+              <button matButton="filled" [disabled]="e.id" (click)="onSaveExtraBranch(e)">
+                <mat-icon>add</mat-icon>
+                <span>Agregar en sede</span>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="manageDishes">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right; font-weight: 600; background: #f5f5f5;">Gestionar en platos</th>
+            <td mat-cell *matCellDef="let e" style="text-align: right;">
+              <button mat-stroked-button color="primary" [disabled]="!e.id" (click)="openManageExtraBranchDishes(e)">
+                <mat-icon>tune</mat-icon>
+                <span>Gestionar en platos</span>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    } @else {
+      <div style="display: flex; justify-content: center; margin: 10px 0">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="savingExtraBranch">Cerrar</button>
+  </mat-dialog-actions>
+</div>
