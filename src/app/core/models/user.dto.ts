@@ -1,4 +1,5 @@
 import {RestaurantDto} from './restaurant.dto';
+import {BranchDto} from './branch.dto';
 
 export interface UserDto {
   id: number;
@@ -8,4 +9,5 @@ export interface UserDto {
   role: string;
   tokenVersion: number;
   restaurant: RestaurantDto;
+  branch: BranchDto;
 }

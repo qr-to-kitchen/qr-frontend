@@ -23,6 +23,14 @@ export class BranchDishService extends Base<BranchDishApiResponse> {
     }).pipe(catchError(this.handleError));
   }
 
+  getByBranchId(branchId: number): Observable<BranchDishApiResponse> {
+    return this.http.get<BranchDishApiResponse>(`${this.basePath}/branch/${branchId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   create(body: BranchDishDto): Observable<BranchDishApiResponse> {
     return this.http.post<BranchDishApiResponse>(`${this.basePath}`, body, {
       headers: {

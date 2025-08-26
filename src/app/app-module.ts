@@ -38,6 +38,8 @@ import { ManageDishes } from './admin/pages/manage-dishes/manage-dishes';
 import { CreateDishDialog } from './admin/dialogs/create-dish.dialog/create-dish.dialog';
 import { ManageBranchDishDialog } from './admin/dialogs/manage-branch-dish.dialog/manage-branch-dish.dialog';
 import {MatChipsModule} from '@angular/material/chips';
+import { ManageDishesBranch } from './branch/pages/manage-dishes-branch/manage-dishes-branch';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import {MatChipsModule} from '@angular/material/chips';
     CreateUserBranchDialog,
     ManageDishes,
     CreateDishDialog,
-    ManageBranchDishDialog
+    ManageBranchDishDialog,
+    ManageDishesBranch
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTableModule,
     MatTooltip,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSlideToggle
   ],
   providers: [
     provideHttpClient(),

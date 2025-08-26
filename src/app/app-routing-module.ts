@@ -7,6 +7,7 @@ import {ForgetPassword} from './security/pages/forget-password/forget-password';
 import {ProfilePrincipal} from './core/pages/profile-principal/profile-principal';
 import {ManageBranches} from './admin/pages/manage-branches/manage-branches';
 import {ManageDishes} from './admin/pages/manage-dishes/manage-dishes';
+import {ManageDishesBranch} from './branch/pages/manage-dishes-branch/manage-dishes-branch';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'profile/:role', component: ProfilePrincipal },
   { path: 'manage-branches', component: ManageBranches },
   { path: 'manage-dishes', component: ManageDishes },
+  { path: 'manage-dishes-branch', component: ManageDishesBranch },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];
