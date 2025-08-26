@@ -4,7 +4,7 @@ import {BranchApiResponse} from '../../models/api-responses/branch-api-response'
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import {BranchDto} from '../../models/branch.dto';
-import {BranchUserDto} from '../../../admin/models/branch-user.dto';
+import {CreateBranchUserDto} from '../../../admin/models/create-branch-user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class BranchService extends Base<BranchApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
-  createBranchWithUser(body: BranchUserDto): Observable<BranchApiResponse> {
+  createBranchWithUser(body: CreateBranchUserDto): Observable<BranchApiResponse> {
     return this.http.post<BranchApiResponse>(`${this.basePath}/branch-user`, body, {
       headers: {
         'Content-Type': 'application/json',
