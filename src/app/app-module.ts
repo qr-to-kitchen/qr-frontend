@@ -44,6 +44,7 @@ import { ManageExtras } from './admin/pages/manage-extras/manage-extras';
 import { CreateExtraDialog } from './admin/dialogs/create-extra.dialog/create-extra.dialog';
 import { ManageExtraBranchDialog } from './admin/dialogs/manage-extra-branch.dialog/manage-extra-branch.dialog';
 import { ManageExtraBranchDishesDialog } from './admin/dialogs/manage-extra-branch-dishes.dialog/manage-extra-branch-dishes.dialog';
+import { ManageExtraBranches } from './branch/pages/manage-extra-branches/manage-extra-branches';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ManageExtraBranchDishesDialog } from './admin/dialogs/manage-extra-bran
     ManageExtras,
     CreateExtraDialog,
     ManageExtraBranchDialog,
-    ManageExtraBranchDishesDialog
+    ManageExtraBranchDishesDialog,
+    ManageExtraBranches
   ],
   imports: [
     BrowserModule,

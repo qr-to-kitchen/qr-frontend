@@ -25,6 +25,14 @@ export class ExtraService extends Base<ExtraApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
+  getExtraBranchByBranchId(id: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/extraBranch/branch/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   update(id: number, body: ExtraDto): Observable<ExtraApiResponse> {
     return this.http.put<ExtraApiResponse>(`${this.basePath}/${id}`, body, {
       headers: {

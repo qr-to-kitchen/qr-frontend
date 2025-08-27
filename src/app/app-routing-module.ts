@@ -9,6 +9,7 @@ import {ManageBranches} from './admin/pages/manage-branches/manage-branches';
 import {ManageDishes} from './admin/pages/manage-dishes/manage-dishes';
 import {ManageDishesBranch} from './branch/pages/manage-dishes-branch/manage-dishes-branch';
 import {ManageExtras} from './admin/pages/manage-extras/manage-extras';
+import {ManageExtraBranches} from './branch/pages/manage-extra-branches/manage-extra-branches';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'manage-dishes', component: ManageDishes },
   { path: 'manage-dishes-branch', component: ManageDishesBranch },
   { path: 'manage-extras', component: ManageExtras },
+  { path: 'manage-extras-branch', component: ManageExtraBranches },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];
