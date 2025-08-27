@@ -17,7 +17,7 @@
         <div class="column">
           <span style="font-weight: 700;">CREADO</span>
           <div style="display: flex; flex-direction: column; gap: 10px; min-height: 150px; padding: 6px; background: #e9e7eb; border-radius: 8px;">
-            @for (o of ordersCreated; track o) {
+            @for (o of ordersCreated; track o.id) {
               <mat-card style="display: flex; flex-direction: column; gap: 8px; padding: 10px">
                 <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> {{ o.tableNumber }}</span>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -42,7 +42,7 @@
         <div class="column">
           <span style="font-weight: 700;">COCINANDO</span>
           <div style="display: flex; flex-direction: column; gap: 10px; min-height: 150px; padding: 6px; background: #e9e7eb; border-radius: 8px;">
-            @for (o of ordersCooking; track o) {
+            @for (o of ordersCooking; track o.id) {
               <mat-card style="display: flex; flex-direction: column; gap: 8px; padding: 10px">
                 <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> {{ o.tableNumber }}</span>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -67,7 +67,7 @@
         <div class="column">
           <span style="font-weight: 700;">LISTO</span>
           <div style="display: flex; flex-direction: column; gap: 10px; min-height: 150px; padding: 6px; background: #e9e7eb; border-radius: 8px;">
-            @for (o of ordersReady; track o) {
+            @for (o of ordersReady; track o.id) {
               <mat-card style="display: flex; flex-direction: column; gap: 8px; padding: 10px">
                 <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> {{ o.tableNumber }}</span>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -92,7 +92,7 @@
       </div>
     } @case ('list') {
       <div style="display: flex; flex-direction: column; gap: 16px;">
-        @for (o of orders; track o) {
+        @for (o of orders; track o.id) {
           <mat-card style="align-items: center; padding: 8px; display: flex; flex-direction: row; justify-content: space-between;">
             <div style="display: flex; flex-direction: column; gap: 8px;">
               <div style="display: flex; gap: 8px; font-weight: 700;">
