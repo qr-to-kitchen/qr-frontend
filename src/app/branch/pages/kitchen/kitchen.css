@@ -1,0 +1,21 @@
+.board {
+  display: flex;
+  gap: 12px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 33%;
+}
+
+@media (max-width: 800px) {
+  .board {
+    flex-direction: column;
+  }
+
+  .column {
+    width: 100%;
+  }
+}

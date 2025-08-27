@@ -45,6 +45,8 @@ import { CreateExtraDialog } from './admin/dialogs/create-extra.dialog/create-ex
 import { ManageExtraBranchDialog } from './admin/dialogs/manage-extra-branch.dialog/manage-extra-branch.dialog';
 import { ManageExtraBranchDishesDialog } from './admin/dialogs/manage-extra-branch-dishes.dialog/manage-extra-branch-dishes.dialog';
 import { ManageExtraBranches } from './branch/pages/manage-extra-branches/manage-extra-branches';
+import { Kitchen } from './branch/pages/kitchen/kitchen';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { ManageExtraBranches } from './branch/pages/manage-extra-branches/manage
     CreateExtraDialog,
     ManageExtraBranchDialog,
     ManageExtraBranchDishesDialog,
-    ManageExtraBranches
+    ManageExtraBranches,
+    Kitchen
   ],
   imports: [
     BrowserModule,
@@ -94,7 +97,8 @@ import { ManageExtraBranches } from './branch/pages/manage-extra-branches/manage
     MatTooltip,
     MatDialogModule,
     MatChipsModule,
-    MatSlideToggle
+    MatSlideToggle,
+    MatButtonToggleModule
   ],
   providers: [
     provideHttpClient(),
