@@ -1,0 +1,87 @@
+<div style="width: min(550px, 90vw);">
+  <div mat-dialog-title style="display: flex; align-items: center; gap: 12px;">
+    <mat-icon>receipt_long</mat-icon>
+    <mat-chip>
+      {{ data.order.status }}
+    </mat-chip>
+    <mat-chip>
+      <mat-icon matChipAvatar>table_restaurant</mat-icon>
+      Mesa {{ data.order.tableNumber }}
+    </mat-chip>
+  </div>
+  <mat-dialog-content style="display: flex; flex-direction: column; gap: 8px;">
+    @if (data.order.description) {
+      <span>{{ data.order.description }}</span>
+    }
+    <div class="meta">
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <mat-icon>schedule</mat-icon>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 12px; opacity: 0.75;">Creado</span>
+          <span style="font-weight: 500;">{{ data.order.createdAt | date:'medium' }}</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <mat-icon>update</mat-icon>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 12px; opacity: 0.75;">Actualizado</span>
+          <span style="font-weight: 500;">{{ data.order?.updatedAt | date:'medium' }}</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <mat-icon>storefront</mat-icon>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-size: 12px; opacity: 0.75;">Sucursal</span>
+          <span style="font-weight: 500;">{{ data.order.branch.address }}</span>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div style="display: flex; flex-direction: column; gap: 15px">
+      <h3 style="margin: 0">Items</h3>
+      @for (it of data.order.items; track it) {
+        <div class="item">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="padding: 2px 8px; border-radius: 100px; background: #cacccf; font-size: 12px; font-weight: 600;">x{{ it.quantity }}</span>
+              <span style="font-weight: 600; font-size: 15px;">{{ it.branchDish.dish.name }}</span>
+            </div>
+            <span style="font-size: 12px; opacity: 0.8;">{{ it.branchDish.dish.description }}</span>
+            @if (it.itemExtras.length > 0) {
+              <div style="display: flex; align-items: center; gap: 4px; font-size: 12px; opacity: 0.8;">
+                <mat-icon>add</mat-icon>
+                <span>Extras</span>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                @for (ex of it.itemExtras; track ex) {
+                  <span style="padding: 2px 8px; border-radius: 100px; background: #e9e7eb; font-size: 12px;">
+                  {{ ex.extraBranchDish.extraBranch.extra.name }}
+                </span>
+                }
+              </div>
+            }
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>P. unitario</span>
+              <span>S/. {{ it.unitPrice }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700;">
+              <span>Subtotal</span>
+              <span>S/. {{ it.quantity  * it.unitPrice | number: '1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <mat-divider></mat-divider>
+    <span style="font-weight: 700; text-align: end">Total S/. {{ data.order.orderTotal | number: '1.2-2' }}</span>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton="filled" [disabled]="data.order.status === 'LISTO' || updatingStatus" (click)="onAdvanceStatus()">
+      <mat-icon>fast_forward</mat-icon>
+      Avanzar estado
+    </button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </mat-dialog-actions>
+</div>

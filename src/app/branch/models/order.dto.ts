@@ -7,9 +7,11 @@ export interface OrderDto {
   tableNumber: number;
   status: string;
   createdAt: Date;
+  updatedAt: Date;
   readyAt: Date;
   branch: BranchDto;
   items: OrderItemDto[];
 
   itemsSize: number;
+  orderTotal: number;
 }

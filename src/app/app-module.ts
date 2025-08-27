@@ -47,6 +47,7 @@ import { ManageExtraBranchDishesDialog } from './admin/dialogs/manage-extra-bran
 import { ManageExtraBranches } from './branch/pages/manage-extra-branches/manage-extra-branches';
 import { Kitchen } from './branch/pages/kitchen/kitchen';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { OrderDetailDialog } from './branch/dialogs/order-detail.dialog/order-detail.dialog';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     ManageExtraBranchDialog,
     ManageExtraBranchDishesDialog,
     ManageExtraBranches,
-    Kitchen
+    Kitchen,
+    OrderDetailDialog
   ],
   imports: [
     BrowserModule,
