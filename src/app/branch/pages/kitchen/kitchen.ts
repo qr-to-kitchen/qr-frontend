@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OrderDto} from '../../models/order.dto';
 import {OrderService} from '../../services/order/order.service';
 import {firstValueFrom} from 'rxjs';
@@ -9,6 +9,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {OrderDetailDialog} from '../../dialogs/order-detail.dialog/order-detail.dialog';
+import {io, Socket} from 'socket.io-client';
+import {environment} from '../../../../environment/environment';
 
 @Component({
   selector: 'app-kitchen',
@@ -16,7 +18,7 @@ import {OrderDetailDialog} from '../../dialogs/order-detail.dialog/order-detail.
   templateUrl: './kitchen.html',
   styleUrl: './kitchen.css'
 })
-export class Kitchen implements OnInit {
+export class Kitchen implements OnInit, OnDestroy {
   viewMode: string = 'board';
 
   branchId: number = 0;
@@ -27,9 +29,17 @@ export class Kitchen implements OnInit {
 
   orders : OrderDto[] = [];
 
+  socket: Socket;
+
   constructor(private userService: UserService, private orderService: OrderService,
               private snackBar: MatSnackBar, private router: Router,
-              private dialog: MatDialog,) { }
+              private dialog: MatDialog,) {
+    this.socket = io(environment.sockerUrl, {
+      path: environment.production ? '/qr/socket.io' : '/socket.io',
+      transports: ['websocket'],
+      forceNew: true
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     if (localStorage.getItem('token')) {
@@ -38,6 +48,8 @@ export class Kitchen implements OnInit {
         if (userApiResponse.user.role === "BRANCH") {
           this.branchId = userApiResponse.user.branch.id
           this.refreshOrders();
+
+          this.socket.emit('joinBranchRoom', this.branchId);
         } else {
           localStorage.clear();
           this.snackBar.open("Vuelva a iniciar sesión", "Entendido", {duration: 2000});
@@ -58,6 +70,14 @@ export class Kitchen implements OnInit {
       this.snackBar.open("Vuelva a iniciar sesión", "Entendido", {duration: 2000});
       this.router.navigate(['/login']).then();
     }
+
+    this.socket.on('newOrder', () => {
+      this.refreshOrders();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.socket.disconnect();
   }
 
   changeViewMode($event: any) {
@@ -76,6 +96,7 @@ export class Kitchen implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: OrderDto) => {
       if (result) {
+        this.socket.emit('updateOrder', { orderId: result.id });
         this.refreshOrders();
       }
     })
