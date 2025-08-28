@@ -82,6 +82,9 @@ export class OrderHistory implements OnInit {
       next: (response) => {
         this.orders = response.orders;
         this.productsSize = response.total;
+        for (const order of response.orders) {
+          order.itemsSize = order.items.reduce((acc, it) => acc + it.quantity, 0);
+        }
         this.dataLoaded = true;
       },
       error: (error: ErrorMessage) => {
