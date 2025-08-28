@@ -50,6 +50,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { OrderDetailDialog } from './branch/dialogs/order-detail.dialog/order-detail.dialog';
 import { OrderHistory } from './branch/pages/order-history/order-history';
 import {MatPaginator} from '@angular/material/paginator';
+import { ManageCategories } from './admin/pages/manage-categories/manage-categories';
+import { CreateCategoryDialog } from './admin/dialogs/create-category.dialog/create-category.dialog';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import {MatPaginator} from '@angular/material/paginator';
     ManageExtraBranches,
     Kitchen,
     OrderDetailDialog,
-    OrderHistory
+    OrderHistory,
+    ManageCategories,
+    CreateCategoryDialog
   ],
   imports: [
     BrowserModule,

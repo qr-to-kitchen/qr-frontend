@@ -1,0 +1,23 @@
+<div style="width: min(550px, 90vw);">
+  <h2 mat-dialog-title>Nueva categoría</h2>
+  <mat-dialog-content>
+    <div class="tab-content">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="data.category.name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Orden en el menú</mat-label>
+        <input matInput type="number" min="1" [(ngModel)]="data.category.displayOrder" />
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close [disabled]="creating">Cancelar</button>
+    <button matButton="filled" [disabled]="creating" (click)="onCreateCategory()">
+      <mat-icon>save</mat-icon>
+      <span>Crear</span>
+    </button>
+  </mat-dialog-actions>
+</div>
+
