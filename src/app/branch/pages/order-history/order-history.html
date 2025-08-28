@@ -1,54 +1,57 @@
 <div style="display: flex; flex-direction: column; height: 100%; gap: 16px; margin: 0 10px">
-  @if (dataLoaded) {
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px">
-      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-        <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Fecha de inicio</mat-label>
-          <input matInput [matDatepicker]="pickerStart" [(ngModel)]="startDate" />
-          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-          <mat-datepicker #pickerStart></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Fecha de fin</mat-label>
-          <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="endDate" />
-          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-          <mat-datepicker #pickerEnd></mat-datepicker>
-        </mat-form-field>
-        <button matButton="filled" (click)="searchByDate()">
-          <span>Buscar por fecha</span>
-        </button>
-      </div>
-      @for (o of orders; track o.id) {
-        <mat-card style="align-items: center; padding: 8px; display: flex; flex-direction: row; justify-content: space-between;">
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; gap: 8px; font-weight: 700;">
-              <mat-chip>{{ o.status }}</mat-chip>
-              <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> Mesa {{ o.tableNumber }}</span>
-            </div>
-            <span>{{ o.description || 'Sin descripción' }}</span>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>restaurant</mat-icon> {{ o.itemsSize }} items</span>
-              <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>event</mat-icon> {{ o.createdAt | date:'short' }}</span>
-            </div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 10px">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fecha de inicio</mat-label>
+      <input matInput [matDatepicker]="pickerStart" [(ngModel)]="startDate" />
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Fecha de fin</mat-label>
+      <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="endDate" />
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+    <button matButton="filled" (click)="searchByDate()">
+      <span>Buscar por fecha</span>
+    </button>
+  </div>
+  @if (dataLoaded == 1) {
+    @for (o of orders; track o.id) {
+      <mat-card style="align-items: center; padding: 8px; display: flex; flex-direction: row; justify-content: space-between;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 8px; font-weight: 700;">
+            <mat-chip>{{ o.status }}</mat-chip>
+            <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> Mesa {{ o.tableNumber }}</span>
           </div>
-          <div>
-            <button matButton="filled" (click)="onViewOrder(o)">
-              <mat-icon>visibility</mat-icon> Ver
-            </button>
+          <span>{{ o.description || 'Sin descripción' }}</span>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>restaurant</mat-icon> {{ o.itemsSize }} items</span>
+            <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>event</mat-icon> {{ o.createdAt | date:'short' }}</span>
           </div>
-        </mat-card>
-      }
-      <mat-paginator
-        (page)="handlePageEvent($event)"
-        [length]="productsSize"
-        [pageSize]="10"
-        [pageIndex]="pageIndex"
-        hidePageSize>
-      </mat-paginator>
-    </div>
-  } @else {
+        </div>
+        <div>
+          <button matButton="filled" (click)="onViewOrder(o)">
+            <mat-icon>visibility</mat-icon> Ver
+          </button>
+        </div>
+      </mat-card>
+    }
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="productsSize"
+      [pageSize]="10"
+      [pageIndex]="pageIndex"
+      hidePageSize>
+    </mat-paginator>
+  } @else if (dataLoaded == 0) {
     <div style="display: flex; justify-content: center; margin: 10px 0">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  } @else {
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 16px 0;">
+      <mat-icon>search_off</mat-icon>
+      <span>No se encontraron resultados para el rango elegido.</span>
     </div>
   }
 </div>

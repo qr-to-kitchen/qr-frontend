@@ -18,7 +18,7 @@ import {PageEvent} from '@angular/material/paginator';
   styleUrl: './order-history.css'
 })
 export class OrderHistory implements OnInit {
-  dataLoaded: boolean = false;
+  dataLoaded: number = 0;
 
   branchId: number = 0;
 
@@ -106,7 +106,7 @@ export class OrderHistory implements OnInit {
         for (const order of response.orders) {
           order.itemsSize = order.items.reduce((acc, it) => acc + it.quantity, 0);
         }
-        this.dataLoaded = true;
+        this.dataLoaded = 1;
         this.startDateAux = this.startDate;
         this.endDateAux = this.endDate;
       },
@@ -117,6 +117,7 @@ export class OrderHistory implements OnInit {
           },
           duration: 2000
         });
+        this.dataLoaded = -1;
       }
     });
   }
