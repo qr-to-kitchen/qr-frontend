@@ -14,8 +14,8 @@ export class OrderService extends Base<OrderApiResponse>{
     this.basePath = this.basePath + 'orders';
   }
 
-  getByBranchId(id: number): Observable<OrderApiResponse> {
-    return this.http.get<OrderApiResponse>(`${this.basePath}/branch/${id}`, {
+  getActiveByBranchId(id: number): Observable<OrderApiResponse> {
+    return this.http.get<OrderApiResponse>(`${this.basePath}/branch/active/${id}`, {
       headers: {
         'Content-Type': 'application/json',
       }

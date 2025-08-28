@@ -104,7 +104,7 @@ export class Kitchen implements OnInit, OnDestroy {
   }
 
   refreshOrders() {
-    this.orderService.getByBranchId(this.branchId).subscribe({
+    this.orderService.getActiveByBranchId(this.branchId).subscribe({
       next: (response) => {
         this.orders = response.orders;
         this.ordersCreated = [];
