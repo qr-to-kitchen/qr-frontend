@@ -27,9 +27,20 @@ export class OrderHistory implements OnInit {
 
   orders: OrderDto[] = [];
 
+  startDate: Date;
+  endDate: Date;
+  startDateAux: Date;
+  endDateAux: Date;
+
   constructor(private userService: UserService, private orderService: OrderService,
               private snackBar: MatSnackBar, private router: Router,
-              private dialog: MatDialog,) { }
+              private dialog: MatDialog,) {
+    const now = new Date();
+    this.startDate = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+    this.endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+    this.startDateAux = this.startDate;
+    this.endDateAux = this.endDate;
+  }
 
   async ngOnInit(): Promise<void> {
     if (localStorage.getItem('token')) {
@@ -74,11 +85,21 @@ export class OrderHistory implements OnInit {
 
   handlePageEvent(e: PageEvent) {
     this.pageIndex = e.pageIndex;
+    this.startDate = this.startDateAux;
+    this.endDate = this.endDateAux;
     this.refreshOrders();
   }
 
   refreshOrders() {
-    this.orderService.getByBranchIdAndPage(this.branchId, this.pageIndex + 1).subscribe({
+    this.startDate.setHours(0,0,0,0);
+    this.endDate.setHours(23,59,59,999);
+    const getOrderByFilterDto = {
+      branchId: this.branchId,
+      page: this.pageIndex + 1,
+      startDate: this.startDate,
+      endDate: this.endDate,
+    };
+    this.orderService.getByFilter(getOrderByFilterDto).subscribe({
       next: (response) => {
         this.orders = response.orders;
         this.productsSize = response.total;
@@ -86,6 +107,8 @@ export class OrderHistory implements OnInit {
           order.itemsSize = order.items.reduce((acc, it) => acc + it.quantity, 0);
         }
         this.dataLoaded = true;
+        this.startDateAux = this.startDate;
+        this.endDateAux = this.endDate;
       },
       error: (error: ErrorMessage) => {
         this.snackBar.openFromComponent(ErrorSnackBar, {
@@ -96,5 +119,10 @@ export class OrderHistory implements OnInit {
         });
       }
     });
+  }
+
+  searchByDate() {
+    this.pageIndex = 0;
+    this.refreshOrders();
   }
 }

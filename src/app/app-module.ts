@@ -53,6 +53,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import { ManageCategories } from './admin/pages/manage-categories/manage-categories';
 import { CreateCategoryDialog } from './admin/dialogs/create-category.dialog/create-category.dialog';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -110,11 +112,14 @@ import {MatSelectModule} from '@angular/material/select';
     MatSlideToggle,
     MatButtonToggleModule,
     MatPaginator,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule
   ],
   providers: [
     provideHttpClient(),
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'es-PE'}
   ],
   bootstrap: [App]
 })

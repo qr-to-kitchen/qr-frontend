@@ -1,6 +1,23 @@
 <div style="display: flex; flex-direction: column; height: 100%; gap: 16px; margin: 0 10px">
   @if (dataLoaded) {
     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px">
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Fecha de inicio</mat-label>
+          <input matInput [matDatepicker]="pickerStart" [(ngModel)]="startDate" />
+          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Fecha de fin</mat-label>
+          <input matInput [matDatepicker]="pickerEnd" [(ngModel)]="endDate" />
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+        <button matButton="filled" (click)="searchByDate()">
+          <span>Buscar por fecha</span>
+        </button>
+      </div>
       @for (o of orders; track o.id) {
         <mat-card style="align-items: center; padding: 8px; display: flex; flex-direction: row; justify-content: space-between;">
           <div style="display: flex; flex-direction: column; gap: 8px;">

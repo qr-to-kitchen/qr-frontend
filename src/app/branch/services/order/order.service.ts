@@ -3,6 +3,7 @@ import {Base} from '../../../shared/services/base/base';
 import {OrderApiResponse} from '../../api-responses/order-api-response';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
+import {GetOrderByFilterDto} from '../../models/get-order-by-filter.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class OrderService extends Base<OrderApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
-  getByBranchIdAndPage(id: number, page: number): Observable<OrderApiResponse> {
-    return this.http.get<OrderApiResponse>(`${this.basePath}/branch/${id}/${page}`, {
+  getByFilter(body: GetOrderByFilterDto): Observable<OrderApiResponse> {
+    return this.http.post<OrderApiResponse>(`${this.basePath}/filter`, body, {
       headers: {
         'Content-Type': 'application/json',
       }
