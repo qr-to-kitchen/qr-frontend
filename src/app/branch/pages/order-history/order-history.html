@@ -1,0 +1,37 @@
+<div style="display: flex; flex-direction: column; height: 100%; gap: 16px; margin: 0 10px">
+  @if (dataLoaded) {
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px">
+      @for (o of orders; track o.id) {
+        <mat-card style="align-items: center; padding: 8px; display: flex; flex-direction: row; justify-content: space-between;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; gap: 8px; font-weight: 700;">
+              <mat-chip>{{ o.status }}</mat-chip>
+              <span style="display: flex; gap: 4px; align-items: center;"><mat-icon>table_restaurant</mat-icon> Mesa {{ o.tableNumber }}</span>
+            </div>
+            <span>{{ o.description || 'Sin descripción' }}</span>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>restaurant</mat-icon> {{ o.itemsSize }} items</span>
+              <span style="display: flex; align-items: center; gap: 8px;"><mat-icon>event</mat-icon> {{ o.createdAt | date:'short' }}</span>
+            </div>
+          </div>
+          <div>
+            <button matButton="filled" (click)="onViewOrder(o)">
+              <mat-icon>visibility</mat-icon> Ver
+            </button>
+          </div>
+        </mat-card>
+      }
+      <mat-paginator
+        (page)="handlePageEvent($event)"
+        [length]="productsSize"
+        [pageSize]="10"
+        [pageIndex]="pageIndex"
+        hidePageSize>
+      </mat-paginator>
+    </div>
+  } @else {
+    <div style="display: flex; justify-content: center; margin: 10px 0">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
+</div>

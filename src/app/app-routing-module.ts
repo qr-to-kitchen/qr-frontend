@@ -11,6 +11,7 @@ import {ManageDishesBranch} from './branch/pages/manage-dishes-branch/manage-dis
 import {ManageExtras} from './admin/pages/manage-extras/manage-extras';
 import {ManageExtraBranches} from './branch/pages/manage-extra-branches/manage-extra-branches';
 import {Kitchen} from './branch/pages/kitchen/kitchen';
+import {OrderHistory} from './branch/pages/order-history/order-history';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'manage-extras', component: ManageExtras },
   { path: 'manage-extras-branch', component: ManageExtraBranches },
   { path: 'kitchen', component: Kitchen },
+  { path: 'order-history', component: OrderHistory },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];

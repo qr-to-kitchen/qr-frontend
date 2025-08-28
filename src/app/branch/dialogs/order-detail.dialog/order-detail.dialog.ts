@@ -8,6 +8,7 @@ import {ErrorMessage} from '../../../shared/models/error-message';
 
 type ViewOrder = {
   order: OrderDto;
+  history: boolean;
 };
 
 @Component({

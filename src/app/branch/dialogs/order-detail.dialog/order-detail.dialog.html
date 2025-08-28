@@ -88,10 +88,12 @@
     <span style="font-weight: 700; text-align: end">Total S/. {{ data.order.orderTotal | number: '1.2-2' }}</span>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button matButton="filled" [disabled]="data.order.status === 'LISTO' || updatingStatus" (click)="onAdvanceStatus()">
-      <mat-icon>fast_forward</mat-icon>
-      Avanzar estado
-    </button>
+    @if (!data.history) {
+      <button matButton="filled" [disabled]="data.order.status === 'LISTO' || updatingStatus" (click)="onAdvanceStatus()">
+        <mat-icon>fast_forward</mat-icon>
+        Avanzar estado
+      </button>
+    }
     <button mat-button mat-dialog-close>Cerrar</button>
   </mat-dialog-actions>
 </div>

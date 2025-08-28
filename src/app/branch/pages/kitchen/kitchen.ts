@@ -89,7 +89,8 @@ export class Kitchen implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.data = {
-      order: o
+      order: o,
+      history: false,
     };
 
     const dialogRef = this.dialog.open(OrderDetailDialog, dialogConfig);

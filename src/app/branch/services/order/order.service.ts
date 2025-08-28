@@ -22,6 +22,14 @@ export class OrderService extends Base<OrderApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
+  getByBranchIdAndPage(id: number, page: number): Observable<OrderApiResponse> {
+    return this.http.get<OrderApiResponse>(`${this.basePath}/branch/${id}/${page}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   updateStatus(id: number, status: string): Observable<OrderApiResponse> {
     return this.http.put<OrderApiResponse>(`${this.basePath}/${id}`, { status: status }, {
       headers: {
