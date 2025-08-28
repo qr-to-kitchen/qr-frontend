@@ -25,7 +25,7 @@ export class ManageExtraBranchDishesDialog implements OnInit {
 
   extraBranchDishes: ExtraBranchDishDto[] = [];
 
-  displayedColumns: string[] = ['dish', 'availability', 'actions'];
+  displayedColumns: string[] = ['dish', 'availability', 'price', 'actions'];
 
   constructor(
     private branchDishesService: BranchDishService,
@@ -64,6 +64,10 @@ export class ManageExtraBranchDishesDialog implements OnInit {
 
   onChangeAvailability(e: ExtraBranchDishDto) {
     e.isAvailable = !e.isAvailable;
+    e.changed = true;
+  }
+
+  onExtraBranchDishChanged(e: ExtraBranchDishDto) {
     e.changed = true;
   }
 

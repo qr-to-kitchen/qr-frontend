@@ -25,7 +25,7 @@ export class ManageExtraBranches implements OnInit {
 
   extraBranches: ExtraBranchDto[] = [];
 
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = ['name', 'basePrice'];
 
   constructor(private userService: UserService, private extraService: ExtraService,
               private snackBar: MatSnackBar, private router: Router,

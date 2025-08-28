@@ -28,7 +28,7 @@ export class ManageExtras implements OnInit {
   extras: ExtraDto[] = [];
   extraToEdit: ExtraDto = {} as ExtraDto;
 
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name', 'basePrice', 'actions'];
 
   constructor(private userService: UserService, private extraService: ExtraService,
               private snackBar: MatSnackBar, private router: Router,
