@@ -12,6 +12,8 @@ import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-b
 import {MatSidenav} from '@angular/material/sidenav';
 import {CreateDishDialog} from '../../dialogs/create-dish.dialog/create-dish.dialog';
 import {ManageBranchDishDialog} from '../../dialogs/manage-branch-dish.dialog/manage-branch-dish.dialog';
+import {CategoryService} from '../../services/category/category.service';
+import {CategoryDto} from '../../models/category.dto';
 
 @Component({
   selector: 'app-manage-dish',
@@ -26,13 +28,14 @@ export class ManageDishes implements OnInit {
   restaurantId: number = 0;
 
   dishes: DishDto[] = [];
+  categories: CategoryDto[] = [];
   dishToEdit: DishDto = {} as DishDto;
 
-  displayedColumns: string[] = ['name', 'description', 'basePrice', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'category', 'basePrice', 'actions'];
 
   constructor(private userService: UserService, private dishService: DishService,
-              private snackBar: MatSnackBar, private router: Router,
-              private dialog: MatDialog) {
+              private categoryService: CategoryService, private snackBar: MatSnackBar,
+              private router: Router, private dialog: MatDialog) {
     this.dishToEdit.restaurant = {} as RestaurantDto;
   }
 
@@ -41,21 +44,23 @@ export class ManageDishes implements OnInit {
       try {
         const userApiResponse =  await firstValueFrom(this.userService.getObject());
         if (userApiResponse.user.role === "ADMIN") {
-          this.restaurantId = userApiResponse.user.restaurant.id
-          this.dishService.getByRestaurantId(this.restaurantId).subscribe({
-            next: (response) => {
-              this.dishes = response.dishes;
-              this.dataLoaded = true;
-            },
-            error: (error: ErrorMessage) => {
-              this.snackBar.openFromComponent(ErrorSnackBar, {
-                data: {
-                  messages: error.message
-                },
-                duration: 2000
-              });
-            }
-          })
+          this.restaurantId = userApiResponse.user.restaurant.id;
+
+          try {
+            const dishApiResponse =  await firstValueFrom(this.dishService.getByRestaurantId(this.restaurantId));
+            this.dishes = dishApiResponse.dishes;
+            const categoryApiResponse =  await firstValueFrom(this.categoryService.getByRestaurantId(this.restaurantId));
+            this.categories = categoryApiResponse.categories;
+
+            this.dataLoaded = true;
+          } catch (error: any) {
+            this.snackBar.openFromComponent(ErrorSnackBar, {
+              data: {
+                messages: error.message
+              },
+              duration: 2000
+            });
+          }
         } else {
           localStorage.clear();
           this.snackBar.open("Vuelva a iniciar sesión", "Entendido", {duration: 2000});
@@ -83,8 +88,9 @@ export class ManageDishes implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.data = {
       dish: {
-        restaurantId: this.restaurantId,
-      }
+        restaurantId: this.restaurantId
+      },
+      categories: this.categories
     };
 
     const dialogRef = this.dialog.open(CreateDishDialog, dialogConfig);
@@ -99,6 +105,7 @@ export class ManageDishes implements OnInit {
   openEditDrawer(editDrawer: MatSidenav, dish: DishDto) {
     editDrawer.open().then();
     this.dishToEdit = {...dish};
+    this.dishToEdit.categoryId = dish.category.id;
     this.dishToEdit.restaurant = {...dish.restaurant};
   }
 

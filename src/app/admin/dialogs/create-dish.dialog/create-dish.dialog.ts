@@ -5,9 +5,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DishDto} from '../../models/dish.dto';
 import {ErrorMessage} from '../../../shared/models/error-message';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
+import {CategoryDto} from '../../models/category.dto';
 
 type AddDish = {
   dish: DishDto;
+  categories: CategoryDto[];
 };
 
 @Component({
@@ -39,6 +41,7 @@ export class CreateDishDialog {
       formData.append('description', this.data.dish.description);
       formData.append('basePrice', this.data.dish.basePrice.toString());
       formData.append('restaurantId', this.data.dish.restaurantId.toString());
+      formData.append('categoryId', this.data.dish.categoryId.toString());
       formData.append('file', this.selectedFile);
 
       this.dishService.create(formData).subscribe({

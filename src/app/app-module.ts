@@ -52,6 +52,7 @@ import { OrderHistory } from './branch/pages/order-history/order-history';
 import {MatPaginator} from '@angular/material/paginator';
 import { ManageCategories } from './admin/pages/manage-categories/manage-categories';
 import { CreateCategoryDialog } from './admin/dialogs/create-category.dialog/create-category.dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { CreateCategoryDialog } from './admin/dialogs/create-category.dialog/cre
     MatChipsModule,
     MatSlideToggle,
     MatButtonToggleModule,
-    MatPaginator
+    MatPaginator,
+    MatSelectModule
   ],
   providers: [
     provideHttpClient(),

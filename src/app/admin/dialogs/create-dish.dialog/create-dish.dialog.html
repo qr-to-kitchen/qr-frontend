@@ -16,6 +16,15 @@
           <span matTextPrefix>S/.&nbsp;</span>
           <input matInput type="number" min="0" [(ngModel)]="data.dish.basePrice" />
         </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Categoría</mat-label>
+          <mat-select [(ngModel)]="data.dish.categoryId">
+            @for (cat of data.categories; track cat.id) {
+              <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>Selecciona una categoría</mat-hint>
+        </mat-form-field>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px; margin-left: 10px">
         <span style="font-weight: 600;">Foto del plato</span>

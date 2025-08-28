@@ -29,6 +29,12 @@
                     <div style="color: #444;">{{ d.description }}</div>
                   </td>
                 </ng-container>
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;"> Categoría </th>
+                  <td mat-cell *matCellDef="let d">
+                    <div style="color: #444;">{{ d.category.name }}</div>
+                  </td>
+                </ng-container>
                 <ng-container matColumnDef="basePrice">
                   <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;"> Precio base </th>
                   <td mat-cell *matCellDef="let d">
@@ -83,6 +89,14 @@
               <mat-label>Precio base</mat-label>
               <span matTextPrefix>S/.&nbsp;</span>
               <input matInput type="number" min="0" [(ngModel)]="dishToEdit.basePrice" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Categoría</mat-label>
+              <mat-select [(ngModel)]="dishToEdit.categoryId">
+                @for (cat of categories; track cat.id) {
+                  <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
 
             <div style="display: flex; align-items: center; gap: 16px">
