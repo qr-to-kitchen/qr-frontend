@@ -32,6 +32,14 @@ export class BranchService extends Base<BranchApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
+  getById(id: number): Observable<BranchApiResponse> {
+    return this.http.get<BranchApiResponse>(`${this.basePath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   createBranchWithUser(body: CreateBranchUserDto): Observable<BranchApiResponse> {
     return this.http.post<BranchApiResponse>(`${this.basePath}/branch-user`, body, {
       headers: {

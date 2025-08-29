@@ -65,6 +65,14 @@ export class ExtraService extends Base<ExtraApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
+  getExtraBranchDishByBranchDishId(branchDishId: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/extraBranchDish/branchDish/${branchDishId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   createExtraBranch(body: ExtraBranchDto): Observable<ExtraApiResponse> {
     return this.http.post<ExtraApiResponse>(`${this.basePath}/branch`, body, {
       headers: {

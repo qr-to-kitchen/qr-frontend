@@ -8,4 +8,6 @@ export interface OrderItemDto {
   comment: string;
   branchDish: BranchDishDto;
   itemExtras: OrderItemExtraDto[];
+
+  total: number;
 }

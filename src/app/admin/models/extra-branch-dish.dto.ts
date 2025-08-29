@@ -11,4 +11,5 @@ export interface ExtraBranchDishDto {
   changed: boolean;
   branchDishId: number;
   extraBranchId: number;
+  selected: boolean;
 }

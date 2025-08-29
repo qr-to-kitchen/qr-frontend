@@ -6,7 +6,7 @@ import { App } from './app';
 import {MatToolbar} from '@angular/material/toolbar';
 import { Login } from './security/pages/login/login';
 import { PageNotFound } from './shared/pages/page-not-found/page-not-found';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
@@ -55,6 +55,9 @@ import { CreateCategoryDialog } from './admin/dialogs/create-category.dialog/cre
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import { Menu } from './user/pages/menu/menu';
+import { AddToCartDialog } from './user/dialogs/add-to-cart.dialog/add-to-cart.dialog';
+import {MatBadge} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -84,7 +87,9 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
     OrderDetailDialog,
     OrderHistory,
     ManageCategories,
-    CreateCategoryDialog
+    CreateCategoryDialog,
+    Menu,
+    AddToCartDialog
   ],
   imports: [
     BrowserModule,
@@ -113,7 +118,9 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
     MatButtonToggleModule,
     MatPaginator,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatFabButton,
+    MatBadge
   ],
   providers: [
     provideHttpClient(),

@@ -1,0 +1,10 @@
+.menu-categories__scroller {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.menu-categories__scroller::-webkit-scrollbar {
+  display: none;
+}
