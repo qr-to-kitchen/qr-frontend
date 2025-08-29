@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 
 type ErrorSnackData = {
-  messages: string[];
+  messages: string[] | string;
 };
 
 @Component({
@@ -17,4 +17,6 @@ export class ErrorSnackBar {
     public snackBarRef: MatSnackBarRef<ErrorSnackBar>,
     @Inject(MAT_SNACK_BAR_DATA) public data: ErrorSnackData,
   ) {}
+
+  protected readonly Array = Array;
 }

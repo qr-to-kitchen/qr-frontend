@@ -1,7 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
   <div style="display: flex; flex-direction: column; justify-content: center;">
-    @for (m of data.messages; track m) {
-      <p style="margin: 0">{{ m }}</p>
+    @if (Array.isArray(data.messages)) {
+      @for (m of data.messages; track m) {
+        <p style="margin: 0">{{ m }}</p>
+      }
+    } @else {
+      <p style="margin: 0">{{ data.messages }}</p>
     }
   </div>
   <div style="display: flex; align-items: center;">
