@@ -58,6 +58,7 @@ import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core'
 import { Menu } from './user/pages/menu/menu';
 import { AddToCartDialog } from './user/dialogs/add-to-cart.dialog/add-to-cart.dialog';
 import {MatBadge} from '@angular/material/badge';
+import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import {MatBadge} from '@angular/material/badge';
     ManageCategories,
     CreateCategoryDialog,
     Menu,
-    AddToCartDialog
+    AddToCartDialog,
+    ShoppingCart
   ],
   imports: [
     BrowserModule,

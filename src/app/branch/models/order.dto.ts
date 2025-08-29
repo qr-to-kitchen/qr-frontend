@@ -12,6 +12,8 @@ export interface OrderDto {
   branch: BranchDto;
   items: OrderItemDto[];
 
+  branchId: number;
+
   itemsSize: number;
   orderTotal: number;
 }

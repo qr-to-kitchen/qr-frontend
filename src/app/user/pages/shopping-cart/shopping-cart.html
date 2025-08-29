@@ -1,0 +1,90 @@
+<div style="display: flex; flex-direction: column; height: 100%; gap: 16px; margin: 0 10px">
+  <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px">
+    <mat-icon>shopping_cart</mat-icon>
+    <span style="font-weight: 700; font-size: 18px;">Carrito</span>
+  </div>
+  @if (order.items.length === 0) {
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px 8px;">
+        <mat-icon>remove_shopping_cart</mat-icon>
+        <span>Tu carrito está vacío</span>
+      </div>
+    </div>
+  } @else {
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        @for (it of order.items; track it; let i = $index) {
+          <div style="display: grid; grid-template-columns: 1fr auto; padding: 12px; border: 1px solid #c7c7c7; border-radius: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="padding: 2px 8px; border-radius: 100px; background: #cacccf; font-size: 12px; font-weight: 600;">
+                  x{{ it.quantity }}
+                </span>
+                <span style="font-weight: 600; font-size: 15px;">{{ it.branchDish.dish.name }}</span>
+              </div>
+              <span style="font-size: 12px;">P. base: S/. {{ it.branchDish.customPrice || it.branchDish.dish.basePrice | number:'1.2-2' }}</span>
+              @if (it.itemExtras.length > 0) {
+                <div style="display: flex; align-items: center; gap: 4px; font-size: 12px; opacity: 0.8;">
+                  <mat-icon>add</mat-icon>
+                  <span>Extras</span>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                  @for (ex of it.itemExtras; track ex.extraBranchDish.id) {
+                    <span style="padding: 2px 8px; border-radius: 100px; background: #e9e7eb; font-size: 12px;">
+                    {{ ex.extraBranchDish.extraBranch.extra.name }} + S/. {{ ex.unitPrice | number:'1.2-2' }}
+                  </span>
+                  }
+                </div>
+              }
+              @if (it.comment) {
+                <span style="font-size: 12px; opacity: 0.85;">Comentario: "{{ it.comment }}"</span>
+              }
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+              <div style="display: flex; align-items: center;">
+                <button mat-icon-button matTooltip="Disminuir" (click)="decrement(it)" [disabled]="it.quantity == 1">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+                <span style="min-width: 28px; text-align: center; font-weight: 700;">{{ it.quantity }}</span>
+                <button mat-icon-button matTooltip="Aumentar" (click)="increment(it)">
+                  <mat-icon>add_circle_outline</mat-icon>
+                </button>
+              </div>
+              <div style="display: flex; justify-content: space-between; width: 180px;">
+                <span style="opacity: 0.8;">P. unitario</span>
+                <span>S/. {{ it.unitPrice | number:'1.2-2' }}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; width: 180px; font-weight: 800;">
+                <span>Subtotal</span>
+                <span>S/. {{ it.total | number:'1.2-2' }}</span>
+              </div>
+              <button mat-icon-button matTooltip="Eliminar item" (click)="removeItem(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+      <mat-divider></mat-divider>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" style="flex: 1 1 280px;">
+          <mat-label>Nota general del pedido</mat-label>
+          <input matInput [(ngModel)]="order.description"/>
+          <mat-hint>Opcional</mat-hint>
+        </mat-form-field>
+        <div style="min-width: 240px; display: flex; gap: 6px; font-weight: 800; font-size: 16px;">
+          <span>Total</span>
+          <span>S/. {{ order.orderTotal | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  }
+  <div style="display: flex; gap: 10px;">
+    <button mat-button [routerLink]="['/menu', order.branchId, order.tableNumber]">
+      Seguir comprando
+    </button>
+    <button matButton="filled" (click)="createOrder()" [disabled]="order.items.length == 0">
+      Confirmar pedido
+    </button>
+  </div>
+</div>

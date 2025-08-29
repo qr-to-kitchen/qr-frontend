@@ -1,0 +1,93 @@
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {OrderAuxService} from '../../../shared/services/order-aux/order-aux.service';
+import {OrderDto} from '../../../branch/models/order.dto';
+import {OrderItemDto} from '../../../branch/models/order-item.dto';
+import {OrderService} from '../../../branch/services/order/order.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ErrorMessage} from '../../../shared/models/error-message';
+import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
+import {Router} from '@angular/router';
+import {io, Socket} from 'socket.io-client';
+import {environment} from '../../../../environment/environment';
+
+@Component({
+  selector: 'app-shopping-cart',
+  standalone: false,
+  templateUrl: './shopping-cart.html',
+  styleUrl: './shopping-cart.css'
+})
+export class ShoppingCart implements OnInit, OnDestroy {
+  order: OrderDto;
+
+  socket: Socket;
+
+  constructor(private orderAuxService: OrderAuxService, private orderService: OrderService,
+              private snackBar: MatSnackBar, private router: Router,) {
+    this.order = this.orderAuxService.getOrder();
+    this.socket = io(environment.sockerUrl, {
+      path: environment.production ? '/qr/socket.io' : '/socket.io',
+      transports: ['websocket'],
+      forceNew: true
+    });
+  }
+
+  ngOnInit(): void {
+    if ((!this.order.branchId || this.order.branchId == 0) || (!this.order.tableNumber || this.order.tableNumber == 0)) {
+      this.router.navigate(['/login']).then();
+      this.snackBar.open('No tiene una orden pendiente', 'Entendido', {duration: 2000});
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.socket.connected) {
+      this.socket.disconnect();
+    }
+  }
+
+  createOrder() {
+    this.snackBar.open('Creando orden');
+    this.order.status = 'CREADO';
+    this.order.tableNumber = 2;
+    for (const it of this.order.items) {
+      it.branchDishId = it.branchDish.id;
+      if (it.itemExtras.length != 0) {
+        it.extraBranchDishIds = [];
+        for (const extra of it.itemExtras) {
+          it.extraBranchDishIds.push(extra.extraBranchDish.id);
+        }
+      }
+    }
+    this.orderService.create(this.order).subscribe({
+      next: (response) => {
+        this.snackBar.dismiss();
+        this.orderAuxService.clearOrder();
+        localStorage.setItem('orderId', response.order.id.toString());
+        this.socket.emit('placeOrder', { branchId: this.order.branchId });
+        this.router.navigate(['/order-detail']).then();
+      },
+      error: (error: ErrorMessage) => {
+        this.orderAuxService.clearOrder();
+        this.snackBar.openFromComponent(ErrorSnackBar, {
+          data: {
+            messages: error.message
+          },
+          duration: 2000
+        });
+      }
+    });
+  }
+
+  removeItem(index: number) {
+    this.orderAuxService.removeOrderItem(index);
+  }
+
+  decrement(it: OrderItemDto) {
+    it.quantity--;
+    it.total = it.unitPrice * it.quantity;
+  }
+
+  increment(it: OrderItemDto) {
+    it.quantity++;
+    it.total = it.unitPrice * it.quantity;
+  }
+}

@@ -10,4 +10,6 @@ export interface OrderItemDto {
   itemExtras: OrderItemExtraDto[];
 
   total: number;
+  branchDishId: number;
+  extraBranchDishIds: number[];
 }

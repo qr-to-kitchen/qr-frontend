@@ -4,6 +4,7 @@ import {OrderApiResponse} from '../../api-responses/order-api-response';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import {GetOrderByFilterDto} from '../../models/get-order-by-filter.dto';
+import {OrderDto} from '../../models/order.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,14 @@ export class OrderService extends Base<OrderApiResponse>{
   constructor(http: HttpClient) {
     super(http);
     this.basePath = this.basePath + 'orders';
+  }
+
+  create(body: OrderDto): Observable<OrderApiResponse> {
+    return this.http.post<OrderApiResponse>(`${this.basePath}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
   }
 
   getActiveByBranchId(id: number): Observable<OrderApiResponse> {

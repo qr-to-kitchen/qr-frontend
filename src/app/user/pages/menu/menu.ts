@@ -23,6 +23,7 @@ import {OrderAuxService} from '../../../shared/services/order-aux/order-aux.serv
 })
 export class Menu implements OnInit {
   branchId: number = 0;
+  tableNumber: number = 0;
   activeCategoryId: number = 0;
 
   cartLength: number = 0;
@@ -43,6 +44,9 @@ export class Menu implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.branchId = this.route.snapshot.params['branchId'];
+      this.orderAuxService.setBranchId(this.branchId);
+      this.tableNumber = this.route.snapshot.params['tableNumber'];
+      this.orderAuxService.setTableNumber(this.tableNumber);
       const branchApiResponse =  await firstValueFrom(this.branchService.getById(this.branchId));
       this.branch = branchApiResponse.branch;
 

@@ -14,6 +14,7 @@ import {Kitchen} from './branch/pages/kitchen/kitchen';
 import {OrderHistory} from './branch/pages/order-history/order-history';
 import {ManageCategories} from './admin/pages/manage-categories/manage-categories';
 import {Menu} from './user/pages/menu/menu';
+import {ShoppingCart} from './user/pages/shopping-cart/shopping-cart';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'manage-extras-branch', component: ManageExtraBranches },
   { path: 'kitchen', component: Kitchen },
   { path: 'order-history', component: OrderHistory },
-  { path: 'menu/:branchId', component: Menu },
+  { path: 'menu/:branchId/:tableNumber', component: Menu },
+  { path: 'shopping-cart', component: ShoppingCart },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];

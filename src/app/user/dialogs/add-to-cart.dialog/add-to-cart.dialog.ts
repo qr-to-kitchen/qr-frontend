@@ -33,6 +33,7 @@ export class AddToCartDialog implements OnInit {
     this.orderItem.quantity = 1;
     this.orderItem.unitPrice = Number(this.data.branchDish.customPrice || this.data.branchDish.dish.basePrice);
     this.orderItem.total = this.orderItem.unitPrice * this.orderItem.quantity;
+    this.orderItem.itemExtras = [];
   }
 
   async ngOnInit(): Promise<void> {
@@ -55,12 +56,14 @@ export class AddToCartDialog implements OnInit {
 
   addItemToCart() {
     this.orderItem.branchDish = this.data.branchDish;
-    this.orderItem.itemExtras = this.extraBranchDishes.map(extraBranchDish => {
-      const orderItemExtra: OrderItemExtraDto = {} as OrderItemExtraDto;
-      orderItemExtra.extraBranchDish = extraBranchDish;
-      orderItemExtra.unitPrice = Number(extraBranchDish.customPrice || extraBranchDish.extraBranch.extra.basePrice);
-      return orderItemExtra;
-    });
+    for (const extraBranchDish of this.extraBranchDishes) {
+      if (extraBranchDish.selected) {
+        const orderItemExtra: OrderItemExtraDto = {} as OrderItemExtraDto;
+        orderItemExtra.extraBranchDish = extraBranchDish;
+        orderItemExtra.unitPrice = Number(extraBranchDish.customPrice || extraBranchDish.extraBranch.extra.basePrice);
+        this.orderItem.itemExtras = [...this.orderItem.itemExtras, orderItemExtra];
+      }
+    }
     this.dialogRef.close(this.orderItem);
   }
 
