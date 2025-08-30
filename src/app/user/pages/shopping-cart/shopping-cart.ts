@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OrderAuxService} from '../../../shared/services/order-aux/order-aux.service';
 import {OrderDto} from '../../../branch/models/order.dto';
-import {OrderItemDto} from '../../../branch/models/order-item.dto';
 import {OrderService} from '../../../branch/services/order/order.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorMessage} from '../../../shared/models/error-message';
@@ -17,6 +16,8 @@ import {environment} from '../../../../environment/environment';
   styleUrl: './shopping-cart.css'
 })
 export class ShoppingCart implements OnInit, OnDestroy {
+  waiting: boolean = false;
+
   order: OrderDto;
 
   socket: Socket;
@@ -33,8 +34,29 @@ export class ShoppingCart implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if ((!this.order.branchId || this.order.branchId == 0) || (!this.order.tableNumber || this.order.tableNumber == 0)) {
-      this.router.navigate(['/login']).then();
-      this.snackBar.open('No tiene una orden pendiente', 'Entendido', {duration: 2000});
+      if (localStorage.getItem('orderStandBy') && sessionStorage.getItem('branchId') && sessionStorage.getItem('tableNumber')) {
+        const order: OrderDto = JSON.parse(localStorage.getItem('orderStandBy') || '{}');
+        if (order.items.length > 0) {
+          const ref = this.snackBar.open(`Tienes una orden armándose. ¿Deseas recuperarla?`, 'Recuperar', { duration: 5000 });
+          this.waiting = true;
+          ref.afterDismissed().subscribe(({ dismissedByAction }) => {
+            if (dismissedByAction) {
+              this.waiting = false;
+              this.orderAuxService.setOrder(order);
+              this.order = this.orderAuxService.getOrder();
+            } else {
+              this.snackBar.open('Orden descartada', 'Entendido', {duration: 2000});
+              this.router.navigate(['/menu', order.branchId, order.tableNumber]).then();
+            }
+          });
+        } else {
+          this.router.navigate(['/menu', order.branchId, order.tableNumber]).then();
+        }
+      } else {
+        localStorage.removeItem('orderStandBy');
+        this.snackBar.open('No tiene una orden pendiente', 'Entendido', {duration: 2000});
+        this.router.navigate(['/page-not-found']).then();
+      }
     }
   }
 
@@ -61,12 +83,14 @@ export class ShoppingCart implements OnInit, OnDestroy {
       next: (response) => {
         this.snackBar.dismiss();
         this.orderAuxService.clearOrder();
+        localStorage.removeItem('orderStandBy');
         localStorage.setItem('orderId', response.order.id.toString());
         this.socket.emit('placeOrder', { branchId: this.order.branchId });
         this.router.navigate(['/order-detail']).then();
       },
       error: (error: ErrorMessage) => {
         this.orderAuxService.clearOrder();
+        localStorage.removeItem('orderStandBy');
         this.snackBar.openFromComponent(ErrorSnackBar, {
           data: {
             messages: error.message
@@ -81,13 +105,11 @@ export class ShoppingCart implements OnInit, OnDestroy {
     this.orderAuxService.removeOrderItem(index);
   }
 
-  decrement(it: OrderItemDto) {
-    it.quantity--;
-    it.total = it.unitPrice * it.quantity;
+  decrement(index: number) {
+    this.orderAuxService.decrementOrderItem(index);
   }
 
-  increment(it: OrderItemDto) {
-    it.quantity++;
-    it.total = it.unitPrice * it.quantity;
+  increment(index: number) {
+    this.orderAuxService.incrementOrderItem(index);
   }
 }

@@ -42,11 +42,11 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
               <div style="display: flex; align-items: center;">
-                <button mat-icon-button matTooltip="Disminuir" (click)="decrement(it)" [disabled]="it.quantity == 1">
+                <button mat-icon-button matTooltip="Disminuir" (click)="decrement(i)" [disabled]="it.quantity == 1">
                   <mat-icon>remove_circle_outline</mat-icon>
                 </button>
                 <span style="min-width: 28px; text-align: center; font-weight: 700;">{{ it.quantity }}</span>
-                <button mat-icon-button matTooltip="Aumentar" (click)="increment(it)">
+                <button mat-icon-button matTooltip="Aumentar" (click)="increment(i)">
                   <mat-icon>add_circle_outline</mat-icon>
                 </button>
               </div>
@@ -80,10 +80,10 @@
     </div>
   }
   <div style="display: flex; gap: 10px;">
-    <button mat-button [routerLink]="['/menu', order.branchId, order.tableNumber]">
+    <button mat-button [routerLink]="['/menu', order.branchId, order.tableNumber]" [disabled]="waiting">
       Seguir comprando
     </button>
-    <button matButton="filled" (click)="createOrder()" [disabled]="order.items.length == 0">
+    <button matButton="filled" (click)="createOrder()" [disabled]="order.items.length == 0 || waiting">
       Confirmar pedido
     </button>
   </div>
