@@ -11,6 +11,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {OrderDetailDialog} from '../../dialogs/order-detail.dialog/order-detail.dialog';
 import {io, Socket} from 'socket.io-client';
 import {environment} from '../../../../environment/environment';
+import {BranchService} from '../../../core/services/branch/branch.service';
 
 @Component({
   selector: 'app-kitchen',
@@ -32,8 +33,8 @@ export class Kitchen implements OnInit, OnDestroy {
   socket: Socket;
 
   constructor(private userService: UserService, private orderService: OrderService,
-              private snackBar: MatSnackBar, private router: Router,
-              private dialog: MatDialog,) {
+              private branchService: BranchService, private snackBar: MatSnackBar,
+              private router: Router, private dialog: MatDialog,) {
     this.socket = io(environment.sockerUrl, {
       path: environment.production ? '/qr/socket.io' : '/socket.io',
       transports: ['websocket'],
@@ -46,7 +47,18 @@ export class Kitchen implements OnInit, OnDestroy {
       try {
         const userApiResponse =  await firstValueFrom(this.userService.getObject());
         if (userApiResponse.user.role === "BRANCH") {
-          this.branchId = userApiResponse.user.branch.id
+          if (userApiResponse.user.branch.dailyCode == null) {
+            const branchApiResponse =  await firstValueFrom(this.branchService.refreshDailyCode(userApiResponse.user.branch.id));
+            userApiResponse.user.branch = branchApiResponse.branch;
+          } else {
+            const today = new Date();
+            const dailyCodeDate = new Date(userApiResponse.user.branch.dailyCodeUpdatedAt);
+            if (today.getDate() !== dailyCodeDate.getDate() || today.getMonth() !== dailyCodeDate.getMonth() || today.getFullYear() !== dailyCodeDate.getFullYear()) {
+              const branchApiResponse =  await firstValueFrom(this.branchService.refreshDailyCode(userApiResponse.user.branch.id));
+              userApiResponse.user.branch = branchApiResponse.branch;
+            }
+          }
+          this.branchId = userApiResponse.user.branch.id;
           this.refreshOrders();
 
           this.socket.emit('joinBranchRoom', this.branchId);
@@ -77,7 +89,9 @@ export class Kitchen implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.socket.disconnect();
+    if (this.socket.connected) {
+      this.socket.disconnect();
+    }
   }
 
   changeViewMode($event: any) {

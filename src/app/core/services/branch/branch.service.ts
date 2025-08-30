@@ -47,4 +47,12 @@ export class BranchService extends Base<BranchApiResponse>{
       }
     }).pipe(catchError(this.handleError));
   }
+
+  refreshDailyCode(id: number): Observable<BranchApiResponse> {
+    return this.http.put<BranchApiResponse>(`${this.basePath}/dailyCode/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
 }
