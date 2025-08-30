@@ -30,4 +30,12 @@ export class QrService extends Base<QrApiResponse>{
       }
     }).pipe(catchError(this.handleError));
   }
+
+  regenerateById(body: QrDto): Observable<QrApiResponse> {
+    return this.http.post<QrApiResponse>(`${this.basePath}/regenerate`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
 }

@@ -60,6 +60,7 @@ import { AddToCartDialog } from './user/dialogs/add-to-cart.dialog/add-to-cart.d
 import {MatBadge} from '@angular/material/badge';
 import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
 import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
+import { CreateQr } from './super-admin/pages/create-qr/create-qr';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
     Menu,
     AddToCartDialog,
     ShoppingCart,
-    QrRedirect
+    QrRedirect,
+    CreateQr
   ],
   imports: [
     BrowserModule,

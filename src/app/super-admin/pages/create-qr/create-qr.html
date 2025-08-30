@@ -1,0 +1,62 @@
+<div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+  <mat-card style="width: min(760px, 90vw);">
+    <mat-card-title style="padding: 10px 0 0 10px">Gestionar QRs</mat-card-title>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs="false" (selectedTabChange)="onTabChange()">
+        <mat-tab label="Crear">
+          <div style="display: flex; flex-direction: column; gap: 10px; margin: 10px;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Branch ID</mat-label>
+                <input matInput type="number" [(ngModel)]="qr.branchId" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Table Number</mat-label>
+                <input matInput type="number" [(ngModel)]="qr.tableNumber" />
+              </mat-form-field>
+            </div>
+            <div>
+              <button matButton="filled" [disabled]="creating" (click)="createQR()">
+                <span>Generar QR</span>
+              </button>
+            </div>
+            @if (qrCreated) {
+              <h3>Resultado</h3>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <img [src]="qrSrc" alt="QR Preview" style="width: 220px; height: 220px; object-fit: cover; border-radius: 10px;"/>
+                <div style="color: #666; font-size: 12px;">Escanea este QR para abrir la URL</div>
+              </div>
+            }
+          </div>
+        </mat-tab>
+        <mat-tab label="Re-generar">
+          <div style="display: flex; flex-direction: column; gap: 10px; margin: 10px;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Branch ID</mat-label>
+                <input matInput type="number" [(ngModel)]="qr.branchId" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Table Number</mat-label>
+                <input matInput type="number" [(ngModel)]="qr.tableNumber" />
+              </mat-form-field>
+            </div>
+            <div>
+              <button matButton="filled" [disabled]="creating" (click)="regenerateQR()">
+                <span>Re-generar QR</span>
+              </button>
+            </div>
+            @if (qrCreated) {
+              <h3>Resultado</h3>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <img [src]="qrSrc" alt="QR Preview" style="width: 220px; height: 220px; object-fit: cover; border-radius: 10px;"/>
+                <div style="color: #666; font-size: 12px;">Escanea este QR para abrir la URL</div>
+              </div>
+            }
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -17,6 +17,7 @@ import {Menu} from './user/pages/menu/menu';
 import {ShoppingCart} from './user/pages/shopping-cart/shopping-cart';
 import {QrRedirect} from './user/pages/qr-redirect/qr-redirect';
 import {CodeGuard} from './user/guards/code-guard';
+import {CreateQr} from './super-admin/pages/create-qr/create-qr';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -34,6 +35,8 @@ const routes: Routes = [
   { path: 'menu/:branchId/:tableNumber', component: Menu, canActivate: [CodeGuard] },
   { path: 'shopping-cart', component: ShoppingCart },
   { path: 'r/:qrId', component: QrRedirect },
+
+  { path: 'createQr', component: CreateQr },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];
