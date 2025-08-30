@@ -59,6 +59,7 @@ import { Menu } from './user/pages/menu/menu';
 import { AddToCartDialog } from './user/dialogs/add-to-cart.dialog/add-to-cart.dialog';
 import {MatBadge} from '@angular/material/badge';
 import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
+import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
     CreateCategoryDialog,
     Menu,
     AddToCartDialog,
-    ShoppingCart
+    ShoppingCart,
+    QrRedirect
   ],
   imports: [
     BrowserModule,

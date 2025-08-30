@@ -1,0 +1,12 @@
+<div style="display: flex; justify-content: center; height: 100%">
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    @if (loading) {
+      <mat-spinner diameter="48"></mat-spinner>
+      <p>Validando, por favor espera…</p>
+    } @else {
+      <div style="border: 1px solid #e57373; background: #ffebee; color: #b71c1c; padding: 12px; border-radius: 6px;">
+        <h3>Ocurrió un error</h3>
+      </div>
+    }
+  </div>
+</div>
