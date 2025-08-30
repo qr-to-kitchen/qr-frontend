@@ -61,6 +61,7 @@ import {MatBadge} from '@angular/material/badge';
 import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
 import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
 import { CreateQr } from './super-admin/pages/create-qr/create-qr';
+import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { CreateQr } from './super-admin/pages/create-qr/create-qr';
     AddToCartDialog,
     ShoppingCart,
     QrRedirect,
-    CreateQr
+    CreateQr,
+    HomeSuperAdmin
   ],
   imports: [
     BrowserModule,

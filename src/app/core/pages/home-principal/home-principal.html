@@ -6,5 +6,11 @@
     @case ('BRANCH') {
       <app-home-branch [role]="role"></app-home-branch>
     }
+    @case ('SUPER_ADMIN') {
+      <app-home-super-admin [role]="role"></app-home-super-admin>
+    }
+    @default {
+      <app-page-not-found></app-page-not-found>
+    }
   }
 </div>
