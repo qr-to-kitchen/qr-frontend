@@ -89,9 +89,9 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     @if (!data.history) {
-      <button matButton="filled" [disabled]="data.order.status === 'LISTO' || updatingStatus" (click)="onAdvanceStatus()">
+      <button matButton="filled" [disabled]="updatingStatus" (click)="onAdvanceStatus()">
         <mat-icon>fast_forward</mat-icon>
-        Avanzar estado
+        {{ data.order.status !== 'LISTO' ? 'Avanzar estado' : 'Entregar pedido' }}
       </button>
     }
     <button mat-button mat-dialog-close>Cerrar</button>

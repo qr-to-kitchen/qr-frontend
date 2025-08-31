@@ -28,7 +28,7 @@ export class OrderDetailDialog {
   ) { }
 
   onAdvanceStatus() {
-    const newStatus = this.data.order.status === 'CREADO' ? 'COCINANDO' : this.data.order.status === 'COCINANDO' ? 'LISTO' : '';
+    const newStatus = this.data.order.status === 'CREADO' ? 'COCINANDO' : this.data.order.status === 'COCINANDO' ? 'LISTO' : this.data.order.status === 'LISTO' ? 'ENTREGADO' : '';
 
     if (newStatus !== '') {
       this.snackBar.open('Cambiando estado de la orden');
