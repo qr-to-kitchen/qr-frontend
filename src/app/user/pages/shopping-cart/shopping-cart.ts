@@ -41,9 +41,33 @@ export class ShoppingCart implements OnInit, OnDestroy {
           this.waiting = true;
           ref.afterDismissed().subscribe(({ dismissedByAction }) => {
             if (dismissedByAction) {
-              this.waiting = false;
-              this.orderAuxService.setOrder(order);
-              this.order = this.orderAuxService.getOrder();
+              order.items.forEach(it => {
+                it.branchDishId = it.branchDish.id;
+                if (it.itemExtras.length != 0) {
+                  it.extraBranchDishIds = [];
+                  for (const extra of it.itemExtras) {
+                    it.extraBranchDishIds.push(extra.extraBranchDish.id);
+                  }
+                }
+              });
+              this.snackBar.open('Recuperando orden');
+              this.orderService.restore(order).subscribe({
+                next: (response) => {
+                  this.snackBar.dismiss();
+                  this.waiting = false;
+                  this.orderAuxService.setOrder(response.order);
+                  this.order = this.orderAuxService.getOrder();
+                },
+                error: (error: ErrorMessage) => {
+                  this.snackBar.openFromComponent(ErrorSnackBar, {
+                    data: {
+                      messages: error.message
+                    },
+                    duration: 2000
+                  });
+                  this.router.navigate(['/menu', order.branchId, order.tableNumber]).then();
+                }
+              });
             } else {
               this.snackBar.open('Orden descartada', 'Entendido', {duration: 2000});
               this.router.navigate(['/menu', order.branchId, order.tableNumber]).then();
