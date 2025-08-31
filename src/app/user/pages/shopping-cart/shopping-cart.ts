@@ -8,6 +8,9 @@ import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-b
 import {Router} from '@angular/router';
 import {io, Socket} from 'socket.io-client';
 import {environment} from '../../../../environment/environment';
+import {OrderItemDto} from '../../../branch/models/order-item.dto';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {EditItemDialog} from '../../dialogs/edit-item.dialog/edit-item.dialog';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -23,7 +26,8 @@ export class ShoppingCart implements OnInit, OnDestroy {
   socket: Socket;
 
   constructor(private orderAuxService: OrderAuxService, private orderService: OrderService,
-              private snackBar: MatSnackBar, private router: Router,) {
+              private snackBar: MatSnackBar, private router: Router,
+              private dialog: MatDialog,) {
     this.order = this.orderAuxService.getOrder();
     this.socket = io(environment.sockerUrl, {
       path: environment.production ? '/qr/socket.io' : '/socket.io',
@@ -135,5 +139,21 @@ export class ShoppingCart implements OnInit, OnDestroy {
 
   increment(index: number) {
     this.orderAuxService.incrementOrderItem(index);
+  }
+
+  editItem(orderItem: OrderItemDto, index: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      orderItem: {...orderItem}
+    };
+
+    const dialogRef = this.dialog.open(EditItemDialog, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((result: OrderItemDto) => {
+      if (result) {
+        this.orderAuxService.editOrderItem(result, index);
+      }
+    });
   }
 }

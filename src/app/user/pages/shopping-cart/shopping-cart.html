@@ -13,7 +13,7 @@
   } @else {
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <div style="display: flex; flex-direction: column; gap: 16px;">
-        @for (it of order.items; track it; let i = $index) {
+        @for (it of order.items; track $index; let i = $index) {
           <div style="display: grid; grid-template-columns: 1fr auto; padding: 12px; border: 1px solid #c7c7c7; border-radius: 10px;">
             <div style="display: flex; flex-direction: column; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 8px;">
@@ -58,9 +58,14 @@
                 <span>Subtotal</span>
                 <span>S/. {{ it.total | number:'1.2-2' }}</span>
               </div>
-              <button mat-icon-button matTooltip="Eliminar item" (click)="removeItem(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <div style="display: flex; gap: 8px;">
+                <button mat-icon-button matTooltip="Editar item" (click)="editItem(it, i)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Eliminar item" (click)="removeItem(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         }

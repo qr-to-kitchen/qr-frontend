@@ -62,6 +62,7 @@ import { ShoppingCart } from './user/pages/shopping-cart/shopping-cart';
 import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
 import { CreateQr } from './super-admin/pages/create-qr/create-qr';
 import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
+import { EditItemDialog } from './user/dialogs/edit-item.dialog/edit-item.dialog';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
     ShoppingCart,
     QrRedirect,
     CreateQr,
-    HomeSuperAdmin
+    HomeSuperAdmin,
+    EditItemDialog
   ],
   imports: [
     BrowserModule,

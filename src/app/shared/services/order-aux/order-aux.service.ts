@@ -37,6 +37,12 @@ export class OrderAuxService {
     localStorage.setItem('orderStandBy', JSON.stringify(this.order));
   }
 
+  editOrderItem(orderItem: OrderItemDto, index: number) {
+    this.order.orderTotal = this.order.orderTotal - this.order.items[index].total + orderItem.total;
+    this.order.items[index] = orderItem;
+    localStorage.setItem('orderStandBy', JSON.stringify(this.order));
+  }
+
   removeOrderItem(index: number) {
     this.order.orderTotal = this.order.orderTotal - this.order.items[index].total;
     this.order.items.splice(index, 1);
