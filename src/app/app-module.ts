@@ -64,6 +64,7 @@ import { CreateQr } from './super-admin/pages/create-qr/create-qr';
 import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
 import { EditItemDialog } from './user/dialogs/edit-item.dialog/edit-item.dialog';
 import { MyOrder } from './user/pages/my-order/my-order';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { MyOrder } from './user/pages/my-order/my-order';
     MatSelectModule,
     MatDatepickerModule,
     MatFabButton,
-    MatBadge
+    MatBadge,
+    MatMenuModule
   ],
   providers: [
     provideHttpClient(),

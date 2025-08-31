@@ -62,16 +62,34 @@
               </div>
               <div style="display: flex; flex-wrap: wrap; gap: 6px;">
                 @for (ex of it.itemExtras; track ex) {
-                  <span style="padding: 2px 8px; border-radius: 100px; background: #e9e7eb; font-size: 12px;">
-                    {{ ex.extraBranchDish.extraBranch.extra.name }}
-                    + S/.
-                    {{ ex.unitPrice | number:'1.2-2' }}
-                  </span>
+                  <div class="row-to-column">
+                    <span>{{ ex.extraBranchDish.extraBranch.extra.name }}</span>
+                    <span>+ S/. {{ ex.unitPrice | number:'1.2-2' }}</span>
+                  </div>
                 }
               </div>
             }
           </div>
-          <div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: flex-end;">
+              <span [matMenuTriggerFor]="menu" class="status-chip" [ngClass]="it.status">
+                {{ it.status }}
+              </span>
+            </div>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="setStatus(it, 'CREADO')">
+                Creado
+              </button>
+              <button mat-menu-item (click)="setStatus(it, 'COCINANDO')">
+                Cocinando
+              </button>
+              <button mat-menu-item (click)="setStatus(it, 'LISTO')">
+                Listo
+              </button>
+              <button mat-menu-item (click)="setStatus(it, 'ENTREGADO')">
+                Entregado
+              </button>
+            </mat-menu>
             <div style="display: flex; justify-content: space-between;">
               <span>P. unitario</span>
               <span>S/. {{ it.unitPrice }}</span>
@@ -89,10 +107,17 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     @if (!data.history) {
-      <button matButton="filled" [disabled]="updatingStatus" (click)="onAdvanceStatus()">
-        <mat-icon>fast_forward</mat-icon>
-        {{ data.order.status !== 'LISTO' ? 'Avanzar estado' : 'Entregar pedido' }}
-      </button>
+      @if (data.order.status !== 'LISTO') {
+        <button matButton="filled" [disabled]="updatingStatus" (click)="onAdvanceStatus()">
+          <mat-icon>save</mat-icon>
+          Guardar Cambios
+        </button>
+      } @else {
+        <button matButton="filled" [disabled]="updatingStatus" (click)="closeOrder()">
+          <mat-icon>assignment_turned_in</mat-icon>
+          Cerrar Pedido
+        </button>
+      }
     }
     <button mat-button mat-dialog-close>Cerrar</button>
   </mat-dialog-actions>

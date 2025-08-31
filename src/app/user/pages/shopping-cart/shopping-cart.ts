@@ -99,6 +99,7 @@ export class ShoppingCart implements OnInit, OnDestroy {
     this.order.status = 'CREADO';
     this.order.tableNumber = 2;
     for (const it of this.order.items) {
+      it.status = 'CREADO';
       it.branchDishId = it.branchDish.id;
       if (it.itemExtras.length != 0) {
         it.extraBranchDishIds = [];

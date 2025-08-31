@@ -5,6 +5,7 @@ import {OrderService} from '../../services/order/order.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {ErrorMessage} from '../../../shared/models/error-message';
+import {OrderItemDto} from '../../models/order-item.dto';
 
 type ViewOrder = {
   order: OrderDto;
@@ -28,12 +29,47 @@ export class OrderDetailDialog {
   ) { }
 
   onAdvanceStatus() {
-    const newStatus = this.data.order.status === 'CREADO' ? 'COCINANDO' : this.data.order.status === 'COCINANDO' ? 'LISTO' : this.data.order.status === 'LISTO' ? 'ENTREGADO' : '';
+    const body: { items: { id: number, status: string }[] } = {
+      items: []
+    };
+    for (const item of this.data.order.items) {
+      const newStatus = {
+        id: item.id,
+        status: item.status,
+      };
+      body.items.push(newStatus);
+    }
+    this.snackBar.open('Guardando cambios');
+    this.updatingStatus = true;
+    this.orderService.updateItemsStatus(this.data.order.id, body).subscribe({
+      next: (response) => {
+        this.snackBar.dismiss();
+        this.updatingStatus = false;
+        this.dialogRef.close(response.order);
+      },
+      error: (error: ErrorMessage) => {
+        this.snackBar.openFromComponent(ErrorSnackBar, {
+          data: {
+            messages: error.message
+          },
+          duration: 2000
+        });
+        this.updatingStatus = false;
+      }
+    });
+  }
 
-    if (newStatus !== '') {
-      this.snackBar.open('Cambiando estado de la orden');
-      this.updatingStatus = true;
-      this.orderService.updateStatus(this.data.order.id, newStatus).subscribe({
+  setStatus(it: OrderItemDto, st: string) {
+    it.status = st;
+  }
+
+  closeOrder() {
+    const itemsNotDelivered = this.data.order.items.filter(item => item.status !== 'ENTREGADO');
+    if (itemsNotDelivered.length > 0) {
+      this.snackBar.open('No se puede cerrar la orden porque hay productos que no han sido entregados.', "Entendido", { duration: 2000 });
+    } else {
+      this.snackBar.open('Cerrando orden');
+      this.orderService.updateStatus(this.data.order.id, "CERRADO").subscribe({
         next: (response) => {
           this.snackBar.dismiss();
           this.updatingStatus = false;
@@ -46,6 +82,7 @@ export class OrderDetailDialog {
             },
             duration: 2000
           });
+          this.updatingStatus = false;
         }
       });
     }

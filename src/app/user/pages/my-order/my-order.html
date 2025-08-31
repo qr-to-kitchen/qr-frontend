@@ -76,7 +76,12 @@
                 </div>
               }
             </div>
-            <div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div>
+                <span class="status-chip" [ngClass]="it.status">
+                  {{ it.status }}
+                </span>
+              </div>
               <div style="display: flex; justify-content: space-between;">
                 <span>P. unitario</span>
                 <span>S/. {{ it.unitPrice | number:'1.2-2' }}</span>

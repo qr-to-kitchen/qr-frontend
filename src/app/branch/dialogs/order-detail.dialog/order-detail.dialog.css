@@ -9,11 +9,35 @@
   grid-template-columns: 2fr 1fr;
 }
 
+.row-to-column {
+  display: flex;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: #e9e7eb;
+  font-size: 12px;
+}
+
+.status-chip {
+  padding: 4px 8px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.status-chip.CREADO { background: #ccc; color: #333; }
+.status-chip.COCINANDO { background: #ff9800; color: #fff; }
+.status-chip.LISTO { background: #4caf50; color: #fff; }
+.status-chip.ENTREGADO { background: #2196f3; color: #fff; }
+
 @media (max-width: 800px) {
   .meta {
     grid-template-columns: 1fr;
   }
   .item {
     grid-template-columns: 1fr 1fr;
+  }
+  .row-to-column {
+    flex-direction: column;
+    gap: 0;
   }
 }

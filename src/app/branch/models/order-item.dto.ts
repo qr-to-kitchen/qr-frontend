@@ -6,6 +6,7 @@ export interface OrderItemDto {
   quantity: number;
   unitPrice: number;
   comment: string;
+  status: string;
   branchDish: BranchDishDto;
   itemExtras: OrderItemExtraDto[];
 
