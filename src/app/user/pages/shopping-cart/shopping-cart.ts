@@ -20,6 +20,8 @@ import {EditItemDialog} from '../../dialogs/edit-item.dialog/edit-item.dialog';
 })
 export class ShoppingCart implements OnInit, OnDestroy {
   waiting: boolean = false;
+  addItems: boolean = false;
+  orderId: number = 0;
 
   order: OrderDto;
 
@@ -37,6 +39,12 @@ export class ShoppingCart implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('orderId')) {
+      this.addItems = true;
+      this.orderId = parseInt(localStorage.getItem('orderId')!);
+    } else {
+      this.addItems = false;
+    }
     if ((!this.order.branchId || this.order.branchId == 0) || (!this.order.tableNumber || this.order.tableNumber == 0)) {
       if (localStorage.getItem('orderStandBy') && sessionStorage.getItem('branchId') && sessionStorage.getItem('tableNumber')) {
         const order: OrderDto = JSON.parse(localStorage.getItem('orderStandBy') || '{}');
@@ -112,14 +120,43 @@ export class ShoppingCart implements OnInit, OnDestroy {
       next: (response) => {
         this.snackBar.dismiss();
         this.orderAuxService.clearOrder();
-        localStorage.removeItem('orderStandBy');
         localStorage.setItem('orderId', response.order.id.toString());
         this.socket.emit('placeOrder', { branchId: this.order.branchId });
         this.router.navigate(['/my-order']).then();
       },
       error: (error: ErrorMessage) => {
         this.orderAuxService.clearOrder();
-        localStorage.removeItem('orderStandBy');
+        this.snackBar.openFromComponent(ErrorSnackBar, {
+          data: {
+            messages: error.message
+          },
+          duration: 2000
+        });
+      }
+    });
+  }
+
+  addItemsToOrder() {
+    this.snackBar.open('Añadiendo platos a orden');
+    for (const it of this.order.items) {
+      it.status = 'CREADO';
+      it.branchDishId = it.branchDish.id;
+      if (it.itemExtras.length != 0) {
+        it.extraBranchDishIds = [];
+        for (const extra of it.itemExtras) {
+          it.extraBranchDishIds.push(extra.extraBranchDish.id);
+        }
+      }
+    }
+    this.orderService.addItemsToOrder(this.orderId, this.order).subscribe({
+      next: () => {
+        this.snackBar.dismiss();
+        this.orderAuxService.clearOrder();
+        this.socket.emit('placeOrder', { branchId: this.order.branchId });
+        this.router.navigate(['/my-order']).then();
+      },
+      error: (error: ErrorMessage) => {
+        this.orderAuxService.clearOrder();
         this.snackBar.openFromComponent(ErrorSnackBar, {
           data: {
             messages: error.message
