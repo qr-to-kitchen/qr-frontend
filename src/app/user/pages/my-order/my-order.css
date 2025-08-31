@@ -1,0 +1,28 @@
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.card {
+  gap: 12px;
+  padding: 12px;
+  width: 50%;
+}
+
+@media (max-width: 800px) {
+  .meta {
+    grid-template-columns: 1fr;
+  }
+  .item {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card {
+    width: 90%;
+  }
+}

@@ -1,0 +1,153 @@
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px;">
+  @if (orderExists == 1) {
+    <mat-card class="card">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <mat-icon>receipt_long</mat-icon>
+        <mat-chip>{{ order.status }}</mat-chip>
+        <mat-chip>
+          <mat-icon matChipAvatar>table_restaurant</mat-icon>
+          Mesa {{ order.tableNumber }}
+        </mat-chip>
+      </div>
+      <span>{{ order.description || 'Sin descripción' }}</span>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+          <mat-icon>restaurant</mat-icon>
+          {{ order.itemsSize }} items
+        </span>
+          <span style="display: flex; align-items: center; gap: 8px;">
+          <mat-icon>event</mat-icon>
+            {{ order.createdAt | date:'short' }}
+        </span>
+      </div>
+      <div class="meta">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <mat-icon>schedule</mat-icon>
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; opacity: 0.75;">Creado</span>
+            <span style="font-weight: 500;">{{ order.createdAt | date:'medium' }}</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <mat-icon>update</mat-icon>
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; opacity: 0.75;">Actualizado</span>
+            <span style="font-weight: 500;">{{ order.updatedAt | date:'medium' }}</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <mat-icon>storefront</mat-icon>
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; opacity: 0.75;">Sucursal</span>
+            <span style="font-weight: 500;">{{ order.branch.address }}</span>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <h3 style="margin: 0">Items</h3>
+        @for (it of order.items; track it.id) {
+          <div class="item">
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="padding: 2px 8px; border-radius: 100px; background: #cacccf; font-size: 12px; font-weight: 600;">x{{ it.quantity }}</span>
+                <span style="font-weight: 600; font-size: 15px;">{{ it.branchDish.dish.name }}</span>
+              </div>
+              <span style="font-size: 12px; opacity: 0.8;"> S/.
+                {{
+                  it.branchDish.customPrice ?
+                    it.branchDish.customPrice :
+                    it.branchDish.dish.basePrice
+                  | number:'1.2-2'
+                }}
+                {{ it.comment ? it.comment : '' }}
+              </span>
+              @if (it.itemExtras.length > 0) {
+                <div style="display: flex; align-items: center; gap: 4px; font-size: 12px; opacity: 0.8;">
+                  <mat-icon>add</mat-icon>
+                  <span>Extras</span>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                  @for (ex of it.itemExtras; track ex) {
+                    <span style="padding: 2px 8px; border-radius: 100px; background: #e9e7eb; font-size: 12px;">
+                      {{ ex.extraBranchDish.extraBranch.extra.name }} + S/. {{ ex.unitPrice | number:'1.2-2' }}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>P. unitario</span>
+                <span>S/. {{ it.unitPrice | number:'1.2-2' }}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                <span>Subtotal</span>
+                <span>S/. {{ (it.quantity * it.unitPrice) | number:'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <mat-divider></mat-divider>
+      <div style="display: flex; justify-content: flex-end;">
+        <span style="font-weight: 700; font-size: 16px;">
+          Total S/. {{ order.orderTotal | number:'1.2-2' }}
+        </span>
+      </div>
+    </mat-card>
+  } @else if (orderExists == 0) {
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <mat-progress-spinner diameter="16" mode="indeterminate"></mat-progress-spinner>
+      Cargando orden...
+    </div>
+  } @else {
+    <span style="font-weight: 700; font-size: 18px;">Recuperar mi orden</span>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Restaurante</mat-label>
+        <mat-select [(ngModel)]="selectedRestaurantId" (selectionChange)="onRestaurantChange()">
+          @for (r of restaurants; track r.id) {
+            <mat-option [value]="r.id">{{ r.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Sede</mat-label>
+        <mat-select [(ngModel)]="selectedBranchId" [disabled]="!selectedRestaurantId || loadingBranches">
+          @if (loadingBranches) {
+            <mat-option disabled>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <mat-progress-spinner diameter="16" mode="indeterminate"></mat-progress-spinner>
+                Cargando sedes...
+              </div>
+            </mat-option>
+          } @else {
+            @for (b of branches; track b.id) {
+              <mat-option [value]="b.id">{{ b.address }}</mat-option>
+            }
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Número de mesa</mat-label>
+      <input matInput type="number" [(ngModel)]="tableNumber" autocomplete="off"/>
+    </mat-form-field>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Código diario</mat-label>
+        <input matInput type="number" [(ngModel)]="dailyCode"/>
+        <mat-hint>Solicitar a cocina</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>ID de la orden</mat-label>
+        <input matInput type="number" [(ngModel)]="orderId"/>
+        <mat-hint>Solicitar a cocina</mat-hint>
+      </mat-form-field>
+    </div>
+    <button matButton="filled" (click)="recoverOrder()" [disabled]="!selectedRestaurantId || !selectedBranchId || !tableNumber || !dailyCode || !orderId">
+      Recuperar orden
+    </button>
+  }
+</div>

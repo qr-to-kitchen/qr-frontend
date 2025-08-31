@@ -63,6 +63,7 @@ import { QrRedirect } from './user/pages/qr-redirect/qr-redirect';
 import { CreateQr } from './super-admin/pages/create-qr/create-qr';
 import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
 import { EditItemDialog } from './user/dialogs/edit-item.dialog/edit-item.dialog';
+import { MyOrder } from './user/pages/my-order/my-order';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { EditItemDialog } from './user/dialogs/edit-item.dialog/edit-item.dialog
     QrRedirect,
     CreateQr,
     HomeSuperAdmin,
-    EditItemDialog
+    EditItemDialog,
+    MyOrder
   ],
   imports: [
     BrowserModule,

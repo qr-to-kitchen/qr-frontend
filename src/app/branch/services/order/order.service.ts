@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import {GetOrderByFilterDto} from '../../models/get-order-by-filter.dto';
 import {OrderDto} from '../../models/order.dto';
+import {RetrieveOrderDto} from '../../models/retrieve-order.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +41,24 @@ export class OrderService extends Base<OrderApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
+  getById(id: number): Observable<OrderApiResponse> {
+    return this.http.get<OrderApiResponse>(`${this.basePath}/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
   restore(body: OrderDto): Observable<OrderApiResponse> {
     return this.http.post<OrderApiResponse>(`${this.basePath}/restore`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  retrieve(body: RetrieveOrderDto): Observable<OrderApiResponse> {
+    return this.http.post<OrderApiResponse>(`${this.basePath}/retrieve`, body, {
       headers: {
         'Content-Type': 'application/json',
       }

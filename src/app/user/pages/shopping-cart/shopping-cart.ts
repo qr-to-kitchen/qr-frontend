@@ -114,7 +114,7 @@ export class ShoppingCart implements OnInit, OnDestroy {
         localStorage.removeItem('orderStandBy');
         localStorage.setItem('orderId', response.order.id.toString());
         this.socket.emit('placeOrder', { branchId: this.order.branchId });
-        this.router.navigate(['/order-detail']).then();
+        this.router.navigate(['/my-order']).then();
       },
       error: (error: ErrorMessage) => {
         this.orderAuxService.clearOrder();

@@ -20,6 +20,6 @@ export class RestaurantService extends Base<RestaurantApiResponse>{
       headers: {
         'Content-Type': 'application/json',
       }
-    }).pipe(catchError(this.handleError))
+    }).pipe(catchError(this.handleError));
   }
 }
