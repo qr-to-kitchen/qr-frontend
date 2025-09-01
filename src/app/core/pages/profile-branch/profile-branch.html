@@ -42,11 +42,11 @@
                 <input matInput [(ngModel)]="userToUpdate.username"/>
               </mat-form-field>
               <div style="display: flex; align-items: center; gap: 16px">
-                <button matButton="filled" [disabled]="userSaving" (click)="onUpdateUser()">
+                <button matButton="filled" [disabled]="userProfileSaving" (click)="onUpdateUser()">
                   <mat-icon>save</mat-icon>
                   <span>Guardar</span>
                 </button>
-                @if (userSaving) {
+                @if (userProfileSaving) {
                   <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
                 }
               </div>
@@ -83,7 +83,7 @@
                   <mat-icon>save</mat-icon>
                   <span>Guardar</span>
                 </button>
-                @if (userSaving) {
+                @if (branchSaving) {
                   <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
                 }
               </div>

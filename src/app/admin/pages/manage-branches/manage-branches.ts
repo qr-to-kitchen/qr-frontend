@@ -27,7 +27,7 @@ export class ManageBranches implements OnInit {
   branches: BranchDto[] = [];
   branchToEdit: BranchDto = {} as BranchDto;
 
-  displayedColumns: string[] = ['address', 'actions'];
+  displayedColumns: string[] = ['address', 'branchDishes', 'extraBranches', 'actions'];
 
   constructor(private userService: UserService, private branchService: BranchService,
               private snackBar: MatSnackBar, private router: Router,
@@ -81,12 +81,15 @@ export class ManageBranches implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.data = {
-      user: {
-        role: "BRANCH"
+      createBranchUser: {
+        user: {
+          role: "BRANCH"
+        },
+        branch: {
+          restaurantId: this.restaurantId
+        }
       },
-      branch: {
-        restaurantId: this.restaurantId
-      }
+      branches: this.branches,
     };
 
     const dialogRef = this.dialog.open(CreateUserBranchDialog, dialogConfig);

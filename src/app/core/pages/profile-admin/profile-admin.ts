@@ -70,7 +70,7 @@ export class ProfileAdmin  implements OnInit {
     this.userSaving = true;
     this.userService.update(this.userToUpdate.id, this.userToUpdate).subscribe({
       next: (response) => {
-        this.snackBar.dismiss();
+        this.snackBar.open("Perfil actualizado con éxito", "Entendido", {duration: 2000});
         this.userSaving = false;
         this.user = response.user;
         this.userToUpdate = {...response.user};
@@ -92,7 +92,7 @@ export class ProfileAdmin  implements OnInit {
     this.restaurantSaving = true;
     this.restaurantService.update(this.restaurantToUpdate.id, this.restaurantToUpdate).subscribe({
       next: (response) => {
-        this.snackBar.dismiss();
+        this.snackBar.open("Restaurante actualizado con éxito", "Entendido", {duration: 2000});
         this.restaurantSaving = false;
         this.restaurant = response.restaurant;
         this.restaurantToUpdate = {...response.restaurant};

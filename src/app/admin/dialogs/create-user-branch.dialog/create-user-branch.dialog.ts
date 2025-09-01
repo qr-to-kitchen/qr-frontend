@@ -5,6 +5,12 @@ import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-b
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorMessage} from '../../../shared/models/error-message';
 import {CreateBranchUserDto} from '../../models/create-branch-user.dto';
+import {BranchDto} from '../../../core/models/branch.dto';
+
+type AddUserBranch = {
+  createBranchUser: CreateBranchUserDto;
+  branches: BranchDto[];
+};
 
 @Component({
   selector: 'app-create-user-branch.dialog',
@@ -14,18 +20,24 @@ import {CreateBranchUserDto} from '../../models/create-branch-user.dto';
 })
 export class CreateUserBranchDialog {
   creating: boolean = false;
+  inheritBranch: boolean = false;
+
+  selectedBranch: BranchDto = {} as BranchDto;
 
   constructor(
     private branchService: BranchService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<CreateUserBranchDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: CreateBranchUserDto,
+    @Inject(MAT_DIALOG_DATA) public data: AddUserBranch,
   ) { }
 
   onCreateBranchWithUser() {
     this.snackBar.open('Creando nueva sede');
     this.creating = true;
-    this.branchService.createBranchWithUser(this.data).subscribe({
+    if (this.inheritBranch) {
+      this.data.createBranchUser.branch.sourceBranchId = this.selectedBranch.id;
+    }
+    this.branchService.createBranchWithUser(this.data.createBranchUser).subscribe({
       next: (response) => {
         this.snackBar.dismiss();
         this.creating = false;
@@ -41,5 +53,9 @@ export class CreateUserBranchDialog {
         this.creating = false;
       }
     });
+  }
+
+  onInheritChange() {
+    this.selectedBranch = {} as BranchDto;
   }
 }
