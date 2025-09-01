@@ -17,6 +17,21 @@
           @if (dataLoaded) {
             <div style="margin: 8px 16px;">
               <table mat-table [dataSource]="dishes">
+                <ng-container matColumnDef="image">
+                  <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;"></th>
+                  <td mat-cell *matCellDef="let d">
+                    <div style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                      @if (d.imageUrl !== '') {
+                        <img [src]="d.imageUrl" alt="Imagen del plato" style="width: 100%; height: 100%; object-fit: cover;"/>
+                      } @else {
+                        <div style="display: flex; flex-direction: column; align-items: center">
+                          <mat-icon>image</mat-icon>
+                          <span>Sin imagen</span>
+                        </div>
+                      }
+                    </div>
+                  </td>
+                </ng-container>
                 <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;"> Nombre </th>
                   <td mat-cell *matCellDef="let d">

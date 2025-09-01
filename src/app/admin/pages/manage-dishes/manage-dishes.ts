@@ -31,7 +31,7 @@ export class ManageDishes implements OnInit {
   categories: CategoryDto[] = [];
   dishToEdit: DishDto = {} as DishDto;
 
-  displayedColumns: string[] = ['name', 'description', 'category', 'basePrice', 'actions'];
+  displayedColumns: string[] = ['image', 'name', 'description', 'category', 'basePrice', 'actions'];
 
   constructor(private userService: UserService, private dishService: DishService,
               private categoryService: CategoryService, private snackBar: MatSnackBar,
