@@ -19,6 +19,9 @@
       <mat-icon>save</mat-icon>
       <span>Crear</span>
     </button>
+    @if (creating) {
+      <mat-progress-spinner diameter="24" mode="indeterminate"></mat-progress-spinner>
+    }
   </mat-dialog-actions>
 </div>
 

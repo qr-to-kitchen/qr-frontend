@@ -91,7 +91,7 @@ export class ManageExtraBranchDialog implements OnInit {
   openManageExtraBranchDishes(extraBranch: ExtraBranchDto) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.maxWidth = '700px';
+    dialogConfig.maxWidth = '800px';
     dialogConfig.data = {
       extraBranch: extraBranch,
     };

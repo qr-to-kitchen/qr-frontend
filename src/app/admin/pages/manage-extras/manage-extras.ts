@@ -28,7 +28,7 @@ export class ManageExtras implements OnInit {
   extras: ExtraDto[] = [];
   extraToEdit: ExtraDto = {} as ExtraDto;
 
-  displayedColumns: string[] = ['name', 'basePrice', 'actions'];
+  displayedColumns: string[] = ['name', 'basePrice', 'extraBranches', 'actions'];
 
   constructor(private userService: UserService, private extraService: ExtraService,
               private snackBar: MatSnackBar, private router: Router,
@@ -104,7 +104,7 @@ export class ManageExtras implements OnInit {
   manageExtra(extra: ExtraDto) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.maxWidth = '800px';
+    dialogConfig.maxWidth = '850px';
     dialogConfig.data = {
       extra: extra,
       restaurantId: this.restaurantId,
