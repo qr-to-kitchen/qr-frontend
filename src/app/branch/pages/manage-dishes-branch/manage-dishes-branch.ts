@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {BranchDto} from '../../../core/models/branch.dto';
 import {DishDto} from '../../../admin/models/dish.dto';
 import {MatSidenav} from '@angular/material/sidenav';
+import {CategoryDto} from '../../../admin/models/category.dto';
 
 @Component({
   selector: 'app-manage-dishes-branch',
@@ -26,12 +27,13 @@ export class ManageDishesBranch implements OnInit {
   branchesDishes: BranchDishDto[] = [];
   branchDishToEdit: BranchDishDto = {} as BranchDishDto;
 
-  displayedColumns: string[] = ['name', 'description', 'basePrice', 'availability', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'category', 'basePrice', 'availability', 'actions'];
 
   constructor(private userService: UserService, private branchDishService: BranchDishService,
               private snackBar: MatSnackBar, private router: Router,) {
     this.branchDishToEdit.branch = {} as BranchDto;
     this.branchDishToEdit.dish = {} as DishDto;
+    this.branchDishToEdit.dish.category = {} as CategoryDto;
   }
 
   async ngOnInit(): Promise<void> {
