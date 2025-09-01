@@ -26,7 +26,7 @@ export class ManageCategories implements OnInit {
   categories: CategoryDto[] = [];
   categoryToEdit: CategoryDto = {} as CategoryDto;
 
-  displayedColumns: string[] = ['name', 'displayOrder', 'actions'];
+  displayedColumns: string[] = ['name', 'displayOrder', 'dishes', 'actions'];
 
   constructor(private userService: UserService, private categoryService: CategoryService,
               private snackBar: MatSnackBar, private router: Router,
