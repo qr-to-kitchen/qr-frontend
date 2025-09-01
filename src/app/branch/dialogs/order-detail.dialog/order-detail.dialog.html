@@ -71,25 +71,33 @@
             }
           </div>
           <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="display: flex; justify-content: flex-end;">
-              <span [matMenuTriggerFor]="menu" class="status-chip" [ngClass]="it.status">
-                {{ it.status }}
-              </span>
-            </div>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="setStatus(it, 'CREADO')">
-                Creado
-              </button>
-              <button mat-menu-item (click)="setStatus(it, 'COCINANDO')">
-                Cocinando
-              </button>
-              <button mat-menu-item (click)="setStatus(it, 'LISTO')">
-                Listo
-              </button>
-              <button mat-menu-item (click)="setStatus(it, 'ENTREGADO')">
-                Entregado
-              </button>
-            </mat-menu>
+            @if (!data.history) {
+              <div style="display: flex; justify-content: flex-end;">
+                <span [matMenuTriggerFor]="menu" class="status-chip" [ngClass]="it.status" style="cursor: pointer;">
+                  {{ it.status }}
+                </span>
+              </div>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="setStatus(it, 'CREADO')">
+                  Creado
+                </button>
+                <button mat-menu-item (click)="setStatus(it, 'COCINANDO')">
+                  Cocinando
+                </button>
+                <button mat-menu-item (click)="setStatus(it, 'LISTO')">
+                  Listo
+                </button>
+                <button mat-menu-item (click)="setStatus(it, 'ENTREGADO')">
+                  Entregado
+                </button>
+              </mat-menu>
+            } @else {
+              <div style="display: flex; justify-content: flex-end;">
+                <span class="status-chip" [ngClass]="it.status">
+                  {{ it.status }}
+                </span>
+              </div>
+            }
             <div style="display: flex; justify-content: space-between;">
               <span>P. unitario</span>
               <span>S/. {{ it.unitPrice }}</span>
