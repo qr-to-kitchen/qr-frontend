@@ -95,6 +95,9 @@ export class MyOrder implements OnInit, OnDestroy {
         this.order = response.order;
         this.order.itemsSize = this.order.items.reduce((acc, it) => acc + it.quantity, 0);
         this.order.orderTotal = this.order.items.reduce((acc, it) => acc + (it.quantity * it.unitPrice), 0);
+        if (this.order.status == 'CERRADO') {
+          localStorage.removeItem('orderId');
+        }
       },
       error: (error: ErrorMessage) => {
         this.orderExists = -1;
