@@ -29,6 +29,7 @@ export class CreateCategoryDialog {
   onCreateCategory() {
     this.snackBar.open("Creando nueva categoría");
     this.creating = true;
+    this.data.category.visible = true;
     this.categoryService.create(this.data.category).subscribe({
       next: (response) => {
         this.snackBar.dismiss();

@@ -26,7 +26,7 @@ export class ManageCategories implements OnInit {
   categories: CategoryDto[] = [];
   categoryToEdit: CategoryDto = {} as CategoryDto;
 
-  displayedColumns: string[] = ['name', 'displayOrder', 'dishes', 'actions'];
+  displayedColumns: string[] = ['name', 'displayOrder', 'dishes', 'visible', 'actions'];
 
   constructor(private userService: UserService, private categoryService: CategoryService,
               private snackBar: MatSnackBar, private router: Router,
@@ -119,5 +119,9 @@ export class ManageCategories implements OnInit {
         this.savingCategory = false;
       }
     });
+  }
+
+  onChangeVisibility() {
+    this.categoryToEdit.visible = !this.categoryToEdit.visible;
   }
 }

@@ -5,6 +5,7 @@ export interface CategoryDto {
   id: number;
   name: string;
   displayOrder: number;
+  visible: boolean;
   restaurant: RestaurantDto;
   dishes: DishDto[];
   restaurantId: number;
