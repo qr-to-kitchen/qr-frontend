@@ -11,6 +11,9 @@
         <span matTextPrefix>S/.&nbsp;</span>
         <input matInput type="number" min="0" [(ngModel)]="data.extra.basePrice" />
       </mat-form-field>
+      <mat-checkbox [(ngModel)]="data.extra.saveInAllBranches">
+        Crear este plato en todas las sedes
+      </mat-checkbox>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>

@@ -114,4 +114,37 @@ export class ManageExtraBranchDishesDialog implements OnInit {
       });
     }
   }
+
+  onSaveExtraBranchDishes() {
+    const extraBranchDishesChanged: ExtraBranchDishDto[] = this.extraBranchDishes.filter(extraBranchDish => extraBranchDish.changed);
+    if (extraBranchDishesChanged.length === 0) {
+      this.snackBar.open('No hay cambios para guardar', "Entendido", { duration: 2000 });
+    } else {
+      for (const extraBranchDish of extraBranchDishesChanged) {
+        extraBranchDish.extraBranchId = extraBranchDish.extraBranch.id;
+        extraBranchDish.branchDishId = extraBranchDish.branchDish.id;
+      }
+      this.snackBar.open('Actualizando extras en plato en sede');
+      this.savingExtraBranchDish = true;
+      this.extraService.bulkSave({ extraBranchDishes: extraBranchDishesChanged }).subscribe({
+        next: (response) => {
+          this.snackBar.dismiss();
+          this.savingExtraBranchDish = false;
+          this.extraBranchDishes = this.extraBranchDishes.map(extraBranchDish => {
+            const match = response.extraBranchDishes.find(ebd => ebd.branchDish.id === extraBranchDish.branchDish.id && ebd.extraBranch.id === extraBranchDish.extraBranch.id);
+            return match ? match : extraBranchDish;
+          });
+        },
+        error: (error: ErrorMessage) => {
+          this.snackBar.openFromComponent(ErrorSnackBar, {
+            data: {
+              messages: error.message
+            },
+            duration: 2000
+          });
+          this.savingExtraBranchDish = false;
+        }
+      });
+    }
+  }
 }

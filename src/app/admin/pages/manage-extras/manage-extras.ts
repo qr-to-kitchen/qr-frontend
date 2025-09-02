@@ -84,6 +84,7 @@ export class ManageExtras implements OnInit {
     dialogConfig.data = {
       extra: {
         restaurantId: this.restaurantId,
+        saveInAllBranches: false
       }
     };
 

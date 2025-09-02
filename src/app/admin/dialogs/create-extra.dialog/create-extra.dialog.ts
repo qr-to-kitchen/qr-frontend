@@ -27,7 +27,11 @@ export class CreateExtraDialog {
   ) { }
 
   onCreateExtra() {
-    this.snackBar.open('Creando nuevo extra');
+    if (this.data.extra.saveInAllBranches) {
+      this.snackBar.open('Creando nuevo extra en todas las sedes');
+    } else {
+      this.snackBar.open('Creando nuevo extra');
+    }
     this.creating = true;
     this.extraService.create(this.data.extra).subscribe({
       next: (response) => {

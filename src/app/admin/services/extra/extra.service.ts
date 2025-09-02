@@ -6,6 +6,7 @@ import {catchError, Observable} from 'rxjs';
 import {ExtraDto} from '../../models/extra.dto';
 import {ExtraBranchDto} from '../../models/extra-branch.dto';
 import {ExtraBranchDishDto} from '../../models/extra-branch-dish.dto';
+import {BulkSaveExtraBranchDishesDto} from '../../models/bulk-save-extra-branch-dishes.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -91,6 +92,14 @@ export class ExtraService extends Base<ExtraApiResponse>{
 
   updateExtraBranchDish(id: number, body: ExtraBranchDishDto): Observable<ExtraApiResponse> {
     return this.http.put<ExtraApiResponse>(`${this.basePath}/branch-dish/${id}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  bulkSave(body: BulkSaveExtraBranchDishesDto): Observable<ExtraApiResponse> {
+    return this.http.post<ExtraApiResponse>(`${this.basePath}/bulk-save`, body, {
       headers: {
         'Content-Type': 'application/json',
       }

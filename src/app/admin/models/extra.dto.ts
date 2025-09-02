@@ -8,4 +8,6 @@ export interface ExtraDto {
   restaurant: RestaurantDto;
   extraBranches: ExtraBranchDto[];
   restaurantId: number;
+
+  saveInAllBranches: boolean;
 }
