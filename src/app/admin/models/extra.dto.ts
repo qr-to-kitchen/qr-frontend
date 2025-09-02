@@ -6,6 +6,6 @@ export interface ExtraDto {
   name: string;
   basePrice: number;
   restaurant: RestaurantDto;
-  extraBranch: ExtraBranchDto[];
+  extraBranches: ExtraBranchDto[];
   restaurantId: number;
 }

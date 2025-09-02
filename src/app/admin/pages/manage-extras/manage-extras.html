@@ -15,7 +15,7 @@
             </button>
           </div>
           @if (dataLoaded) {
-            <div style="margin: 8px 16px;">
+            <div style="margin: 8px; overflow: auto;">
               <table mat-table [dataSource]="extras">
                 <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef style="font-weight: 600; background: #f5f5f5;"> Nombre </th>
@@ -108,6 +108,17 @@
               <div matListItemLine>{{ extraToEdit.restaurant.name }}</div>
             </mat-list-item>
           </mat-list>
+          <mat-card-subtitle>Sedes con este extra</mat-card-subtitle>
+          <div style="max-height: 230px; overflow-y: auto;">
+            <mat-list>
+              @for (extraBranch of extraToEdit.extraBranches; track extraBranch.id) {
+                <mat-list-item>
+                  <mat-icon matListItemIcon>restaurant_menu</mat-icon>
+                  <div matListItemTitle>{{ extraBranch.branch.address }}</div>
+                </mat-list-item>
+              }
+            </mat-list>
+          </div>
         </mat-card>
       </div>
     </mat-sidenav>
