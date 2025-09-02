@@ -24,8 +24,11 @@
             }
           </mat-select>
         </mat-form-field>
+        <mat-checkbox [(ngModel)]="saveInAllBranches">
+          Crear este plato en todas las sedes
+        </mat-checkbox>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 8px; margin-left: 10px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
         <span style="font-weight: 600;">Foto del plato</span>
         <button matButton="filled" (click)="fileInput.click()">
           <mat-icon>upload</mat-icon>

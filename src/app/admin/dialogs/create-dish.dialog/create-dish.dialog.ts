@@ -20,6 +20,7 @@ type AddDish = {
 })
 export class CreateDishDialog {
   creating: boolean = false;
+  saveInAllBranches: boolean = false;
 
   selectedFile: File | null = null;
   imagePreview: string = '';
@@ -33,7 +34,11 @@ export class CreateDishDialog {
 
   onCreateDish() {
     if (this.selectedFile) {
-      this.snackBar.open('Creando nuevo plato');
+      if (this.saveInAllBranches) {
+        this.snackBar.open('Creando nuevo plato en todas las sedes');
+      } else {
+        this.snackBar.open('Creando nuevo plato');
+      }
       this.creating = true;
 
       const formData = new FormData();
@@ -42,6 +47,7 @@ export class CreateDishDialog {
       formData.append('basePrice', this.data.dish.basePrice.toString());
       formData.append('restaurantId', this.data.dish.restaurantId.toString());
       formData.append('categoryId', this.data.dish.categoryId.toString());
+      formData.append('saveInAllBranches', this.saveInAllBranches.toString());
       formData.append('file', this.selectedFile);
 
       this.dishService.create(formData).subscribe({

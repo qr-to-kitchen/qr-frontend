@@ -115,4 +115,36 @@ export class ManageBranchDishDialog implements OnInit {
   onBranchDishChanged(b: BranchDishDto) {
     b.changed = true;
   }
+
+  onSaveBranchDishes() {
+    const branchDishesChanged: BranchDishDto[] = this.branchesDishes.filter(branchDish => branchDish.changed);
+    if (branchDishesChanged.length === 0) {
+      this.snackBar.open('No hay cambios para guardar', "Entendido", { duration: 2000 });
+    } else {
+      for (const branchDish of branchDishesChanged) {
+        branchDish.branchId = branchDish.branch.id;
+        branchDish.dishId = branchDish.dish.id;
+      }
+      this.snackBar.open('Actualizando platos en sede');
+      this.savingBranchDish = true;
+      this.branchDishService.bulkSave({ branchDishes: branchDishesChanged }).subscribe({
+        next: (response) => {
+          this.snackBar.dismiss();
+          this.savingBranchDish = false;
+          this.branchesDishes = this.branchesDishes.map(branchDish => {
+            const match = response.branchesDishes.find(bd => bd.branch.id === branchDish.branch.id && bd.dish.id === branchDish.dish.id);
+            return match ? match : branchDish;
+          });        },
+        error: (error: ErrorMessage) => {
+          this.snackBar.openFromComponent(ErrorSnackBar, {
+            data: {
+              messages: error.message
+            },
+            duration: 2000
+          });
+          this.savingBranchDish = false;
+        }
+      });
+    }
+  }
 }

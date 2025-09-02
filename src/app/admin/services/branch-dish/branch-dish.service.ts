@@ -4,6 +4,7 @@ import {BranchDishApiResponse} from '../../models/api-responses/branch-dish-api-
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import {BranchDishDto} from '../../models/branch-dish.dto';
+import {BulkSaveBranchDishesDto} from '../../models/bulk-save-branch-dishes.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,14 @@ export class BranchDishService extends Base<BranchDishApiResponse> {
 
   update(id: number, body: BranchDishDto): Observable<BranchDishApiResponse> {
     return this.http.put<BranchDishApiResponse>(`${this.basePath}/${id}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  bulkSave(body: BulkSaveBranchDishesDto): Observable<BranchDishApiResponse> {
+    return this.http.post<BranchDishApiResponse>(`${this.basePath}/bulk-save`, body, {
       headers: {
         'Content-Type': 'application/json',
       }
