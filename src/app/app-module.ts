@@ -69,6 +69,8 @@ import { BranchDetail } from './admin/pages/branch-detail/branch-detail';
 import { BranchDetailDishes } from './admin/pages/branch-detail-dishes/branch-detail-dishes';
 import { BranchDetailExtras } from './admin/pages/branch-detail-extras/branch-detail-extras';
 import { ManageBranchDishExtrasDialog } from './admin/dialogs/manage-branch-dish-extras.dialog/manage-branch-dish-extras.dialog';
+import { CreateBranchDishesDialog } from './admin/dialogs/create-branch-dishes.dialog/create-branch-dishes.dialog';
+import { CreateExtraBranchesDialog } from './admin/dialogs/create-extra-branches.dialog/create-extra-branches.dialog';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,9 @@ import { ManageBranchDishExtrasDialog } from './admin/dialogs/manage-branch-dish
     BranchDetail,
     BranchDetailDishes,
     BranchDetailExtras,
-    ManageBranchDishExtrasDialog
+    ManageBranchDishExtrasDialog,
+    CreateBranchDishesDialog,
+    CreateExtraBranchesDialog
   ],
   imports: [
     BrowserModule,

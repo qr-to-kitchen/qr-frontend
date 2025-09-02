@@ -7,6 +7,7 @@ import {ExtraDto} from '../../models/extra.dto';
 import {ExtraBranchDto} from '../../models/extra-branch.dto';
 import {ExtraBranchDishDto} from '../../models/extra-branch-dish.dto';
 import {BulkSaveExtraBranchDishesDto} from '../../models/bulk-save-extra-branch-dishes.dto';
+import {BulkSaveExtraBranchesDto} from '../../models/bulk-save-extra-branches.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,14 @@ export class ExtraService extends Base<ExtraApiResponse>{
 
   getExtraBranchByBranchId(id: number): Observable<ExtraApiResponse> {
     return this.http.get<ExtraApiResponse>(`${this.basePath}/extraBranch/branch/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  getExtraBranchByRestaurantIdAndNoBranchId(restaurantId: number, branchId: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/restaurant/${restaurantId}/no-branch/${branchId}`, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -100,6 +109,14 @@ export class ExtraService extends Base<ExtraApiResponse>{
 
   bulkSave(body: BulkSaveExtraBranchDishesDto): Observable<ExtraApiResponse> {
     return this.http.post<ExtraApiResponse>(`${this.basePath}/bulk-save`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  bulkSaveExtraBranches(body: BulkSaveExtraBranchesDto): Observable<ExtraApiResponse> {
+    return this.http.post<ExtraApiResponse>(`${this.basePath}/bulk-save/extra-branches`, body, {
       headers: {
         'Content-Type': 'application/json',
       }

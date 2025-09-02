@@ -41,6 +41,13 @@ export class BranchDishService extends Base<BranchDishApiResponse> {
     }).pipe(catchError(this.handleError));
   }
 
+  getByRestaurantIdAndNoBranchId(restaurantId: number, branchId: number): Observable<BranchDishApiResponse> {
+    return this.http.get<BranchDishApiResponse>(`${this.basePath}/restaurant/${restaurantId}/no-branch/${branchId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
 
   create(body: BranchDishDto): Observable<BranchDishApiResponse> {
     return this.http.post<BranchDishApiResponse>(`${this.basePath}`, body, {

@@ -13,6 +13,8 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
   ManageBranchDishExtrasDialog
 } from '../../dialogs/manage-branch-dish-extras.dialog/manage-branch-dish-extras.dialog';
+import {BranchDto} from '../../../core/models/branch.dto';
+import {CreateBranchDishesDialog} from '../../dialogs/create-branch-dishes.dialog/create-branch-dishes.dialog';
 
 @Component({
   selector: 'app-branch-detail-dishes',
@@ -25,6 +27,8 @@ export class BranchDetailDishes implements OnInit {
   savingBranchDish: boolean = false;
 
   branchId: number = 0;
+
+  branch: BranchDto = {} as BranchDto;
 
   branchesDishes: BranchDishDto[] = [];
   branchDishToEdit: BranchDishDto = {} as BranchDishDto;
@@ -49,7 +53,7 @@ export class BranchDetailDishes implements OnInit {
 
           try {
             const branchApiResponse =  await firstValueFrom(this.branchService.getById(this.branchId));
-
+            this.branch = branchApiResponse.branch;
             if (branchApiResponse.branch.restaurant.id === userApiResponse.user.restaurant.id) {
               const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchId(this.branchId));
               this.branchesDishes = branchDishApiResponse.branchesDishes;
@@ -90,7 +94,32 @@ export class BranchDetailDishes implements OnInit {
   }
 
   openCreateDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.maxWidth = '700px';
+    dialogConfig.data = {
+      branch: this.branch,
+    };
 
+    const dialogRef = this.dialog.open(CreateBranchDishesDialog, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(async (result: BranchDto) => {
+      if (result) {
+        try {
+          this.dataLoaded = true;
+          const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchId(this.branchId));
+          this.branchesDishes = branchDishApiResponse.branchesDishes;
+          this.dataLoaded = true;
+        } catch (error: any) {
+          this.snackBar.openFromComponent(ErrorSnackBar, {
+            data: {
+              messages: error.message
+            },
+            duration: 2000
+          });
+        }
+      }
+    });
   }
 
   openEditDrawer(editDrawer: MatSidenav, branchDish: BranchDishDto) {
