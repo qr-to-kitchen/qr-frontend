@@ -134,7 +134,8 @@ export class ManageBranchDishDialog implements OnInit {
           this.branchesDishes = this.branchesDishes.map(branchDish => {
             const match = response.branchesDishes.find(bd => bd.branch.id === branchDish.branch.id && bd.dish.id === branchDish.dish.id);
             return match ? match : branchDish;
-          });        },
+          })
+        },
         error: (error: ErrorMessage) => {
           this.snackBar.openFromComponent(ErrorSnackBar, {
             data: {
