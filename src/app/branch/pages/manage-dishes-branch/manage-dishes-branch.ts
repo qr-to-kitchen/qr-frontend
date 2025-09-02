@@ -11,6 +11,10 @@ import {BranchDto} from '../../../core/models/branch.dto';
 import {DishDto} from '../../../admin/models/dish.dto';
 import {MatSidenav} from '@angular/material/sidenav';
 import {CategoryDto} from '../../../admin/models/category.dto';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {
+  ManageBranchDishExtrasDialog
+} from '../../../admin/dialogs/manage-branch-dish-extras.dialog/manage-branch-dish-extras.dialog';
 
 @Component({
   selector: 'app-manage-dishes-branch',
@@ -30,7 +34,8 @@ export class ManageDishesBranch implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'category', 'basePrice', 'availability', 'actions'];
 
   constructor(private userService: UserService, private branchDishService: BranchDishService,
-              private snackBar: MatSnackBar, private router: Router,) {
+              private snackBar: MatSnackBar, private router: Router,
+              private dialog: MatDialog,) {
     this.branchDishToEdit.branch = {} as BranchDto;
     this.branchDishToEdit.dish = {} as DishDto;
     this.branchDishToEdit.dish.category = {} as CategoryDto;
@@ -103,5 +108,17 @@ export class ManageDishesBranch implements OnInit {
         this.savingBranchDish = false;
       }
     });
+  }
+
+  manageBranchDish(branchDish: BranchDishDto) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.maxWidth = '700px';
+    dialogConfig.data = {
+      branchDish: branchDish,
+      branchId: this.branchId,
+    };
+
+    this.dialog.open(ManageBranchDishExtrasDialog, dialogConfig);
   }
 }
