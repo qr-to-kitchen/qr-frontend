@@ -19,6 +19,9 @@ import {QrRedirect} from './user/pages/qr-redirect/qr-redirect';
 import {CodeGuard} from './user/guards/code-guard';
 import {CreateQr} from './super-admin/pages/create-qr/create-qr';
 import {MyOrder} from './user/pages/my-order/my-order';
+import {BranchDetail} from './admin/pages/branch-detail/branch-detail';
+import {BranchDetailDishes} from './admin/pages/branch-detail-dishes/branch-detail-dishes';
+import {BranchDetailExtras} from './admin/pages/branch-detail-extras/branch-detail-extras';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -28,11 +31,16 @@ const routes: Routes = [
   { path: 'manage-branches', component: ManageBranches },
   { path: 'manage-dishes', component: ManageDishes },
   { path: 'manage-categories', component: ManageCategories },
-  { path: 'manage-dishes-branch', component: ManageDishesBranch },
   { path: 'manage-extras', component: ManageExtras },
+  { path: 'branch-detail/:branchId', component: BranchDetail },
+  { path: 'branch-detail/:branchId/dishes', component: BranchDetailDishes },
+  { path: 'branch-detail/:branchId/extras', component: BranchDetailExtras },
+
+  { path: 'manage-dishes-branch', component: ManageDishesBranch },
   { path: 'manage-extras-branch', component: ManageExtraBranches },
   { path: 'kitchen', component: Kitchen },
   { path: 'order-history', component: OrderHistory },
+
   { path: 'menu/:branchId/:tableNumber', component: Menu, canActivate: [CodeGuard] },
   { path: 'shopping-cart', component: ShoppingCart },
   { path: 'r/:qrId', component: QrRedirect },

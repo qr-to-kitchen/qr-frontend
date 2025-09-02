@@ -65,6 +65,10 @@ import { HomeSuperAdmin } from './core/pages/home-super-admin/home-super-admin';
 import { EditItemDialog } from './user/dialogs/edit-item.dialog/edit-item.dialog';
 import { MyOrder } from './user/pages/my-order/my-order';
 import {MatMenuModule} from "@angular/material/menu";
+import { BranchDetail } from './admin/pages/branch-detail/branch-detail';
+import { BranchDetailDishes } from './admin/pages/branch-detail-dishes/branch-detail-dishes';
+import { BranchDetailExtras } from './admin/pages/branch-detail-extras/branch-detail-extras';
+import { ManageBranchDishExtrasDialog } from './admin/dialogs/manage-branch-dish-extras.dialog/manage-branch-dish-extras.dialog';
 
 @NgModule({
   declarations: [
@@ -102,7 +106,11 @@ import {MatMenuModule} from "@angular/material/menu";
     CreateQr,
     HomeSuperAdmin,
     EditItemDialog,
-    MyOrder
+    MyOrder,
+    BranchDetail,
+    BranchDetailDishes,
+    BranchDetailExtras,
+    ManageBranchDishExtrasDialog
   ],
   imports: [
     BrowserModule,
