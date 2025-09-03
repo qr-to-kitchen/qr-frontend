@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {BranchDishService} from '../../services/branch-dish/branch-dish.service';
 import {ExtraService} from '../../services/extra/extra.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -8,6 +8,8 @@ import {firstValueFrom} from 'rxjs';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {ExtraBranchDishDto} from '../../models/extra-branch-dish.dto';
 import {ErrorMessage} from '../../../shared/models/error-message';
+import {io, Socket} from 'socket.io-client';
+import {environment} from '../../../../environment/environment';
 
 type ManageExtraBranch = {
   extraBranch: ExtraBranchDto;
@@ -19,7 +21,7 @@ type ManageExtraBranch = {
   templateUrl: './manage-extra-branch-dishes.dialog.html',
   styleUrl: './manage-extra-branch-dishes.dialog.css'
 })
-export class ManageExtraBranchDishesDialog implements OnInit {
+export class ManageExtraBranchDishesDialog implements OnInit, OnDestroy {
   dataLoaded: boolean = false;
   savingExtraBranchDish: boolean = false;
 
@@ -27,12 +29,20 @@ export class ManageExtraBranchDishesDialog implements OnInit {
 
   displayedColumns: string[] = ['dish', 'availability', 'price', 'actions'];
 
+  socket: Socket;
+
   constructor(
     private branchDishesService: BranchDishService,
     private extraService: ExtraService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: ManageExtraBranch,
-  ) { }
+  ) {
+    this.socket = io(environment.sockerUrl, {
+      path: environment.production ? '/qr/socket.io' : '/socket.io',
+      transports: ['websocket'],
+      forceNew: true
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -52,6 +62,14 @@ export class ManageExtraBranchDishesDialog implements OnInit {
         }
       }
       this.dataLoaded = true;
+
+      this.socket.on('small-snackbar-updates', (data: { current: number, total: number }) => {
+        if (data.current === data.total) {
+          this.snackBar.open(`${data.current} de ${data.total} extras en plato actualizados`, "", { duration: 2000 });
+        } else {
+          this.snackBar.open(`${data.current} de ${data.total} extras en plato actualizados`);
+        }
+      });
     } catch (error: any) {
       this.snackBar.openFromComponent(ErrorSnackBar, {
         data: {
@@ -59,6 +77,12 @@ export class ManageExtraBranchDishesDialog implements OnInit {
         },
         duration: 2000
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.socket.connected) {
+      this.socket.disconnect();
     }
   }
 
@@ -126,9 +150,8 @@ export class ManageExtraBranchDishesDialog implements OnInit {
       }
       this.snackBar.open('Actualizando extras en plato en sede');
       this.savingExtraBranchDish = true;
-      this.extraService.bulkSave({ extraBranchDishes: extraBranchDishesChanged }).subscribe({
+      this.extraService.bulkSave({ extraBranchDishes: extraBranchDishesChanged, socketId: this.socket.id! }).subscribe({
         next: (response) => {
-          this.snackBar.dismiss();
           this.savingExtraBranchDish = false;
           this.extraBranchDishes = this.extraBranchDishes.map(extraBranchDish => {
             const match = response.extraBranchDishes.find(ebd => ebd.branchDish.id === extraBranchDish.branchDish.id && ebd.extraBranch.id === extraBranchDish.extraBranch.id);

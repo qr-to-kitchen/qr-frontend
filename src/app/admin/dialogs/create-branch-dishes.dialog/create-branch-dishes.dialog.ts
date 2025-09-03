@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {BranchDishDto} from '../../models/branch-dish.dto';
 import {BranchDishService} from '../../services/branch-dish/branch-dish.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -7,6 +7,8 @@ import {BranchDto} from '../../../core/models/branch.dto';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {firstValueFrom} from 'rxjs';
 import {ErrorMessage} from '../../../shared/models/error-message';
+import {io, Socket} from 'socket.io-client';
+import {environment} from '../../../../environment/environment';
 
 type CreateBranchDishes = {
   branch: BranchDto;
@@ -18,7 +20,7 @@ type CreateBranchDishes = {
   templateUrl: './create-branch-dishes.dialog.html',
   styleUrl: './create-branch-dishes.dialog.css'
 })
-export class CreateBranchDishesDialog implements OnInit {
+export class CreateBranchDishesDialog implements OnInit, OnDestroy {
   dataLoaded: boolean = false;
   savingBranchDishes: boolean = false;
 
@@ -28,11 +30,19 @@ export class CreateBranchDishesDialog implements OnInit {
 
   displayedColumns: string[] = ['add', 'dish', 'actions'];
 
+  socket: Socket;
+
   constructor(
     private branchDishService: BranchDishService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: CreateBranchDishes,
-  ) { }
+  ) {
+    this.socket = io(environment.sockerUrl, {
+      path: environment.production ? '/qr/socket.io' : '/socket.io',
+      transports: ['websocket'],
+      forceNew: true
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -46,6 +56,14 @@ export class CreateBranchDishesDialog implements OnInit {
         this.branchDishes = [...this.branchDishes, branchDish];
       }
       this.dataLoaded = true;
+
+      this.socket.on('small-snackbar-updates', (data: { current: number, total: number }) => {
+        if (data.current === data.total) {
+          this.snackBar.open(`${data.current} de ${data.total} platos en sede actualizados`, "", { duration: 2000 });
+        } else {
+          this.snackBar.open(`${data.current} de ${data.total} platos en sede actualizados`);
+        }
+      });
     } catch (error: any) {
       this.snackBar.openFromComponent(ErrorSnackBar, {
         data: {
@@ -53,6 +71,12 @@ export class CreateBranchDishesDialog implements OnInit {
         },
         duration: 2000
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.socket.connected) {
+      this.socket.disconnect();
     }
   }
 
@@ -93,9 +117,8 @@ export class CreateBranchDishesDialog implements OnInit {
       }
       this.snackBar.open('Actualizando platos en sede');
       this.savingBranchDishes = true;
-      this.branchDishService.bulkSave({ branchDishes: branchDishesChanged }).subscribe({
+      this.branchDishService.bulkSave({ branchDishes: branchDishesChanged, socketId: this.socket.id! }).subscribe({
         next: (response) => {
-          this.snackBar.dismiss();
           this.savingBranchDishes = false;
           this.branchDishes = this.branchDishes.filter(branchDish => {
             const match = response.branchesDishes.find(bd => bd.branch.id === branchDish.branch.id && bd.dish.id === branchDish.dish.id);

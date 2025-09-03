@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BranchDishDto} from '../../models/branch-dish.dto';
 import {BranchService} from '../../../core/services/branch/branch.service';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
-import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {firstValueFrom} from 'rxjs';
 import {BranchDishService} from '../../services/branch-dish/branch-dish.service';
 import {ErrorMessage} from '../../../shared/models/error-message';
@@ -31,8 +31,6 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
   displayedColumns: string[] = ['branch', 'status', 'price', 'actions'];
 
   socket: Socket;
-
-  snackBarRef: MatSnackBarRef<any> | undefined;
 
   constructor(
     private branchService: BranchService,
@@ -67,19 +65,10 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
       this.dataLoaded = true;
 
       this.socket.on('small-snackbar-updates', (data: { current: number, total: number }) => {
-        const message = `Actualizando ${data.current} de ${data.total} platos en sede`;
-
-        if (this.snackBarRef === undefined) {
-          this.snackBarRef = this.snackBar.open(message, "Cerrar");
-        } else {
-          this.snackBarRef.instance.message = message;
-        }
-
         if (data.current === data.total) {
-          setTimeout(() => {
-            this.snackBarRef?.dismiss();
-            this.snackBarRef = undefined;
-          }, 1000)
+          this.snackBar.open(`${data.current} de ${data.total} platos en sede actualizados`, "", { duration: 2000 });
+        } else {
+          this.snackBar.open(`${data.current} de ${data.total} platos en sede actualizados`);
         }
       });
     } catch (error: any) {
@@ -160,8 +149,9 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
         branchDish.branchId = branchDish.branch.id;
         branchDish.dishId = branchDish.dish.id;
       }
+      this.snackBar.open('Actualizando platos en sede');
       this.savingBranchDish = true;
-      this.branchDishService.bulkSave({ branchDishes: branchDishesChanged, socketId: this.socket.id }).subscribe({
+      this.branchDishService.bulkSave({ branchDishes: branchDishesChanged, socketId: this.socket.id! }).subscribe({
         next: (response) => {
           this.savingBranchDish = false;
           this.branchesDishes = this.branchesDishes.map(branchDish => {
