@@ -22,10 +22,11 @@ import {MyOrder} from './user/pages/my-order/my-order';
 import {BranchDetail} from './admin/pages/branch-detail/branch-detail';
 import {BranchDetailDishes} from './admin/pages/branch-detail-dishes/branch-detail-dishes';
 import {BranchDetailExtras} from './admin/pages/branch-detail-extras/branch-detail-extras';
+import {NoTokenGuard} from './security/guard/no-token-guard';
 
 const routes: Routes = [
-  { path: 'login', component: Login },
-  { path: 'forget-password', component: ForgetPassword },
+  { path: 'login', component: Login, canActivate: [NoTokenGuard] },
+  { path: 'forget-password', component: ForgetPassword, canActivate: [NoTokenGuard] },
   { path: 'home/:role', component: HomePrincipal },
   { path: 'profile/:role', component: ProfilePrincipal },
   { path: 'manage-branches', component: ManageBranches },
