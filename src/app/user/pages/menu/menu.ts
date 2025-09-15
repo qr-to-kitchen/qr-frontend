@@ -77,18 +77,20 @@ export class Menu implements OnInit {
   }
 
   async changeCategory(id: number) {
-    try {
-      this.activeCategoryId = id;
-      const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchIdAndCategoryId(this.branchId, this.activeCategoryId));
-      this.branchesDishes = branchDishApiResponse.branchesDishes;
-    } catch (error: any) {
-      this.snackBar.openFromComponent(ErrorSnackBar, {
-        data: {
-          messages: error.message
-        },
-        duration: 2000
-      });
-      this.branchesDishes = [];
+    if (this.activeCategoryId !== id) {
+      try {
+        this.activeCategoryId = id;
+        const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchIdAndCategoryId(this.branchId, this.activeCategoryId));
+        this.branchesDishes = branchDishApiResponse.branchesDishes;
+      } catch (error: any) {
+        this.snackBar.openFromComponent(ErrorSnackBar, {
+          data: {
+            messages: error.message
+          },
+          duration: 2000
+        });
+        this.branchesDishes = [];
+      }
     }
   }
 

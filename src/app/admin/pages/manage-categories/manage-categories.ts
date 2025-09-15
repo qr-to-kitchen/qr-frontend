@@ -46,6 +46,9 @@ export class ManageCategories implements OnInit {
               this.dataLoaded = true;
             },
             error: (error: ErrorMessage) => {
+              if (error.statusCode === 404) {
+                this.dataLoaded = true;
+              }
               this.snackBar.openFromComponent(ErrorSnackBar, {
                 data: {
                   messages: error.message

@@ -44,9 +44,9 @@ export class CreateDishDialog {
       const formData = new FormData();
       formData.append('name', this.data.dish.name);
       formData.append('description', this.data.dish.description);
-      formData.append('basePrice', this.data.dish.basePrice.toString());
+      formData.append('basePrice', this.data.dish.basePrice?.toString());
       formData.append('restaurantId', this.data.dish.restaurantId.toString());
-      formData.append('categoryId', this.data.dish.categoryId.toString());
+      formData.append('categoryId', this.data.dish.categoryId?.toString());
       formData.append('saveInAllBranches', this.saveInAllBranches.toString());
       formData.append('file', this.selectedFile);
 

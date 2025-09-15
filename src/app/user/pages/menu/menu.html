@@ -6,7 +6,7 @@
   <div style="position: sticky; top: 0; z-index: 10; background: #ffffff;">
     <div class="menu-categories__scroller">
       @for (cat of categories; track cat.id) {
-        <button matButton="tonal" style="flex: 0 0 auto; padding: 6px 12px; font-size: 13px;"
+        <button matButton="filled" style="flex: 0 0 auto; padding: 6px 12px; font-size: 13px;"
                 [style.background-color]="activeCategoryId === cat.id ? '#548fe4' : '#f0f1f3'" (click)="changeCategory(cat.id)">
           {{ cat.name }}
         </button>
@@ -41,9 +41,9 @@
       </div>
     }
   </div>
-  <button mat-fab style="position: fixed; right: 16px; bottom: 16px; z-index: 10;"
+  <button matIconButton style="position: fixed; right: 16px; bottom: 16px; z-index: 10; background-color: #1e40af"
           [matBadge]="cartLength" [matBadgeHidden]="cartLength == 0" matBadgePosition="before" [routerLink]="['/shopping-cart']">
-    <mat-icon>shopping_cart</mat-icon>
+    <mat-icon style="color: white">shopping_cart</mat-icon>
   </button>
 </div>
 

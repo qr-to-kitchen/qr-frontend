@@ -4,6 +4,7 @@ import {RestaurantApiResponse} from '../../models/api-responses/restaurant-api-r
 import {HttpClient} from '@angular/common/http';
 import {RestaurantDto} from '../../models/restaurant.dto';
 import {catchError, Observable} from 'rxjs';
+import {CreateRestaurantUserDto} from '../../../super-admin/models/create-restaurant-user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,14 @@ export class RestaurantService extends Base<RestaurantApiResponse>{
 
   update(id: number, body: RestaurantDto): Observable<RestaurantApiResponse> {
     return this.http.put<RestaurantApiResponse>(`${this.basePath}/${id}`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  createRestaurantWithUser(body: CreateRestaurantUserDto): Observable<RestaurantApiResponse> {
+    return this.http.post<RestaurantApiResponse>(`${this.basePath}/restaurant-user`, body, {
       headers: {
         'Content-Type': 'application/json',
       }

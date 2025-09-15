@@ -55,9 +55,21 @@ export class BranchDetailDishes implements OnInit {
             const branchApiResponse =  await firstValueFrom(this.branchService.getById(this.branchId));
             this.branch = branchApiResponse.branch;
             if (branchApiResponse.branch.restaurant.id === userApiResponse.user.restaurant.id) {
-              const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchId(this.branchId));
-              this.branchesDishes = branchDishApiResponse.branchesDishes;
-              this.dataLoaded = true;
+              try {
+                const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchId(this.branchId));
+                this.branchesDishes = branchDishApiResponse.branchesDishes;
+                this.dataLoaded = true;
+              } catch (error: any) {
+                if (error.statusCode === 404) {
+                  this.dataLoaded = true;
+                }
+                this.snackBar.openFromComponent(ErrorSnackBar, {
+                  data: {
+                    messages: error.message
+                  },
+                  duration: 2000
+                });
+              }
             } else {
               localStorage.clear();
               this.snackBar.open("Sede no corresponde a su restaurante", "Entendido", {duration: 2000});

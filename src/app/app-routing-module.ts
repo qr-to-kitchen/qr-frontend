@@ -23,12 +23,14 @@ import {BranchDetail} from './admin/pages/branch-detail/branch-detail';
 import {BranchDetailDishes} from './admin/pages/branch-detail-dishes/branch-detail-dishes';
 import {BranchDetailExtras} from './admin/pages/branch-detail-extras/branch-detail-extras';
 import {NoTokenGuard} from './security/guard/no-token-guard';
+import {ManageRestaurants} from './super-admin/pages/manage-restaurants/manage-restaurants';
 
 const routes: Routes = [
   { path: 'login', component: Login, canActivate: [NoTokenGuard] },
   { path: 'forget-password', component: ForgetPassword, canActivate: [NoTokenGuard] },
   { path: 'home/:role', component: HomePrincipal },
   { path: 'profile/:role', component: ProfilePrincipal },
+  //Admin
   { path: 'manage-branches', component: ManageBranches },
   { path: 'manage-dishes', component: ManageDishes },
   { path: 'manage-categories', component: ManageCategories },
@@ -36,18 +38,20 @@ const routes: Routes = [
   { path: 'branch-detail/:branchId', component: BranchDetail },
   { path: 'branch-detail/:branchId/dishes', component: BranchDetailDishes },
   { path: 'branch-detail/:branchId/extras', component: BranchDetailExtras },
-
+  //Branch
   { path: 'manage-dishes-branch', component: ManageDishesBranch },
   { path: 'manage-extras-branch', component: ManageExtraBranches },
   { path: 'kitchen', component: Kitchen },
   { path: 'order-history', component: OrderHistory },
-
+  //Client
   { path: 'menu/:branchId/:tableNumber', component: Menu, canActivate: [CodeGuard] },
   { path: 'shopping-cart', component: ShoppingCart },
   { path: 'r/:qrId', component: QrRedirect },
   { path: 'my-order', component: MyOrder },
-
+  //SuperAdmin
   { path: 'createQr', component: CreateQr },
+  { path: 'manage-restaurants', component: ManageRestaurants },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
 ];

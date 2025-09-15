@@ -56,6 +56,9 @@ export class ManageExtraBranchDialog implements OnInit {
       }
       this.dataLoaded = true;
     } catch (error: any) {
+      if (error.statusCode === 404) {
+        this.dataLoaded = true;
+      }
       this.snackBar.openFromComponent(ErrorSnackBar, {
         data: {
           messages: error.message

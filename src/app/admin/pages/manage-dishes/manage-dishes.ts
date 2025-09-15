@@ -22,7 +22,8 @@ import {CategoryDto} from '../../models/category.dto';
   styleUrl: './manage-dishes.css'
 })
 export class ManageDishes implements OnInit {
-  dataLoaded: boolean = false;
+  dataLoadedDishes: boolean = false;
+  dataLoadedCategories: boolean = false;
   savingDish: boolean = false;
 
   restaurantId: number = 0;
@@ -49,11 +50,26 @@ export class ManageDishes implements OnInit {
           try {
             const dishApiResponse =  await firstValueFrom(this.dishService.getByRestaurantId(this.restaurantId));
             this.dishes = dishApiResponse.dishes;
+            this.dataLoadedDishes = true;
+          } catch (error: any) {
+            if (error.statusCode === 404) {
+              this.dataLoadedDishes = true;
+            }
+            this.snackBar.openFromComponent(ErrorSnackBar, {
+              data: {
+                messages: error.message
+              },
+              duration: 2000
+            });
+          }
+          try {
             const categoryApiResponse =  await firstValueFrom(this.categoryService.getByRestaurantId(this.restaurantId));
             this.categories = categoryApiResponse.categories;
-
-            this.dataLoaded = true;
+            this.dataLoadedCategories = true;
           } catch (error: any) {
+            if (error.statusCode === 404) {
+              this.dataLoadedCategories = true;
+            }
             this.snackBar.openFromComponent(ErrorSnackBar, {
               data: {
                 messages: error.message

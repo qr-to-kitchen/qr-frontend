@@ -43,12 +43,14 @@ export class AddToCartDialog implements OnInit {
         this.extraBranchDishes = response.extraBranchDishes;
       },
       error: (error: ErrorMessage) => {
-        this.snackBar.openFromComponent(ErrorSnackBar, {
-          data: {
-            messages: error.message
-          },
-          duration: 2000
-        });
+        if (error.statusCode !== 404) {
+          this.snackBar.openFromComponent(ErrorSnackBar, {
+            data: {
+              messages: error.message
+            },
+            duration: 2000
+          });
+        }
         this.extraBranchDishes = [];
       }
     });

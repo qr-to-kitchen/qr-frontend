@@ -72,6 +72,9 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
         }
       });
     } catch (error: any) {
+      if (error.statusCode === 404) {
+        this.dataLoaded = true;
+      }
       this.snackBar.openFromComponent(ErrorSnackBar, {
         data: {
           messages: error.message

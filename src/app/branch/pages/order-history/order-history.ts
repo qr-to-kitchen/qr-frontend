@@ -111,13 +111,15 @@ export class OrderHistory implements OnInit {
         this.endDateAux = this.endDate;
       },
       error: (error: ErrorMessage) => {
+        if (error.statusCode === 404) {
+          this.dataLoaded = -1;
+        }
         this.snackBar.openFromComponent(ErrorSnackBar, {
           data: {
             messages: error.message
           },
           duration: 2000
         });
-        this.dataLoaded = -1;
       }
     });
   }

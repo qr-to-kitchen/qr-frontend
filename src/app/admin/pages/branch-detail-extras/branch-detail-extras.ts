@@ -46,9 +46,21 @@ export class BranchDetailExtras implements OnInit {
             const branchApiResponse =  await firstValueFrom(this.branchService.getById(this.branchId));
             this.branch = branchApiResponse.branch;
             if (branchApiResponse.branch.restaurant.id === userApiResponse.user.restaurant.id) {
-              const extraBranchApiResponse = await firstValueFrom(this.extraService.getExtraBranchByBranchId(this.branchId));
-              this.extraBranches = extraBranchApiResponse.extraBranches;
-              this.dataLoaded = true;
+              try {
+                const extraBranchApiResponse = await firstValueFrom(this.extraService.getExtraBranchByBranchId(this.branchId));
+                this.extraBranches = extraBranchApiResponse.extraBranches;
+                this.dataLoaded = true;
+              } catch (error: any) {
+                if (error.statusCode === 404) {
+                  this.dataLoaded = true;
+                }
+                this.snackBar.openFromComponent(ErrorSnackBar, {
+                  data: {
+                    messages: error.message
+                  },
+                  duration: 2000
+                });
+              }
             } else {
               localStorage.clear();
               this.snackBar.open("Sede no corresponde a su restaurante", "Entendido", {duration: 2000});

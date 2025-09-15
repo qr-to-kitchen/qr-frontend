@@ -6,7 +6,7 @@ import { App } from './app';
 import {MatToolbar} from '@angular/material/toolbar';
 import { Login } from './security/pages/login/login';
 import { PageNotFound } from './shared/pages/page-not-found/page-not-found';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
@@ -71,6 +71,8 @@ import { BranchDetailExtras } from './admin/pages/branch-detail-extras/branch-de
 import { ManageBranchDishExtrasDialog } from './admin/dialogs/manage-branch-dish-extras.dialog/manage-branch-dish-extras.dialog';
 import { CreateBranchDishesDialog } from './admin/dialogs/create-branch-dishes.dialog/create-branch-dishes.dialog';
 import { CreateExtraBranchesDialog } from './admin/dialogs/create-extra-branches.dialog/create-extra-branches.dialog';
+import { ManageRestaurants } from './super-admin/pages/manage-restaurants/manage-restaurants';
+import { CreateUserRestaurantDialog } from './super-admin/dialogs/create-user-restaurant.dialog/create-user-restaurant.dialog';
 
 @NgModule({
   declarations: [
@@ -114,7 +116,9 @@ import { CreateExtraBranchesDialog } from './admin/dialogs/create-extra-branches
     BranchDetailExtras,
     ManageBranchDishExtrasDialog,
     CreateBranchDishesDialog,
-    CreateExtraBranchesDialog
+    CreateExtraBranchesDialog,
+    ManageRestaurants,
+    CreateUserRestaurantDialog
   ],
   imports: [
     BrowserModule,
@@ -146,7 +150,8 @@ import { CreateExtraBranchesDialog } from './admin/dialogs/create-extra-branches
     MatDatepickerModule,
     MatFabButton,
     MatBadge,
-    MatMenuModule
+    MatMenuModule,
+    MatMiniFabButton
   ],
   providers: [
     provideHttpClient(),

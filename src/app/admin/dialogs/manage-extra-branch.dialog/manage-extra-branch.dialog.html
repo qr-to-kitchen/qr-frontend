@@ -30,7 +30,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right; font-weight: 600; background: #f5f5f5;">Acciones</th>
             <td mat-cell *matCellDef="let e" class="bd-actions-cell">
-              <button matButton="filled" [disabled]="e.id" (click)="onSaveExtraBranch(e)">
+              <button matButton="tonal" [disabled]="e.id" (click)="onSaveExtraBranch(e)">
                 <mat-icon>add</mat-icon>
                 <span>Agregar en sede</span>
               </button>
@@ -39,7 +39,7 @@
           <ng-container matColumnDef="manageDishes">
             <th mat-header-cell *matHeaderCellDef style="text-align: right; font-weight: 600; background: #f5f5f5;">Gestionar en platos</th>
             <td mat-cell *matCellDef="let e" style="text-align: right;">
-              <button mat-stroked-button color="primary" [disabled]="!e.id" (click)="openManageExtraBranchDishes(e)">
+              <button matButton="tonal" [disabled]="!e.id" (click)="openManageExtraBranchDishes(e)">
                 <mat-icon>tune</mat-icon>
                 <span>Gestionar en platos</span>
               </button>

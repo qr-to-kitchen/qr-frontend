@@ -40,12 +40,14 @@ export class EditItemDialog implements OnInit {
         this.data.orderItem.itemExtras = [];
       },
       error: (error: ErrorMessage) => {
-        this.snackBar.openFromComponent(ErrorSnackBar, {
-          data: {
-            messages: error.message
-          },
-          duration: 2000
-        });
+        if (error.statusCode !== 404) {
+          this.snackBar.openFromComponent(ErrorSnackBar, {
+            data: {
+              messages: error.message
+            },
+            duration: 2000
+          });
+        }
         this.extraBranchDishes = [];
       }
     })
