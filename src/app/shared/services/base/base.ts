@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../../../environment/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import {RestaurantApiResponse} from '../../../core/models/api-responses/restaurant-api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,8 @@ export class Base<T> {
     }).pipe(catchError(this.handleError));
   }
 
-  getAll(): Observable<RestaurantApiResponse> {
-    return this.http.get<RestaurantApiResponse>(`${this.basePath}`, {
+  getAll(): Observable<T> {
+    return this.http.get<T>(`${this.basePath}`, {
       headers: {
         'Content-Type': 'application/json',
       }
