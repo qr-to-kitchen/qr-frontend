@@ -2,7 +2,6 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {DishDto} from '../../models/dish.dto';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BranchDishDto} from '../../models/branch-dish.dto';
-import {BranchService} from '../../../core/services/branch/branch.service';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {firstValueFrom} from 'rxjs';
@@ -33,7 +32,6 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
   socket: Socket;
 
   constructor(
-    private branchService: BranchService,
     private branchDishService: BranchDishService,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: ManageDish,
@@ -47,21 +45,12 @@ export class ManageBranchDishDialog implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try {
-      const branchApiResponse =  await firstValueFrom(this.branchService.getByRestaurantId(this.data.restaurantId));
+      const branchDishApiResponse =  await firstValueFrom(this.branchDishService.getBranchDishAvailabilityInBranches(this.data.restaurantId, this.data.dish.id));
 
-      for (const branch of branchApiResponse.branches) {
-        try {
-          const branchDishApiResponse =  await firstValueFrom(this.branchDishService.getBranchDishByBranchIdAndDishId(branch.id, this.data.dish.id));
-          branchDishApiResponse.branchDish.changed = false;
-          this.branchesDishes = [...this.branchesDishes, branchDishApiResponse.branchDish];
-        } catch {
-          const branchDish: BranchDishDto = {} as BranchDishDto;
-          branchDish.changed = false;
-          branchDish.branch = branch;
-          branchDish.dish = this.data.dish;
-          this.branchesDishes = [...this.branchesDishes, branchDish];
-        }
+      for (const branchDish of branchDishApiResponse.branchesDishes) {
+        branchDish.changed = false;
       }
+      this.branchesDishes = branchDishApiResponse.branchesDishes;
       this.dataLoaded = true;
 
       this.socket.on('small-snackbar-updates', (data: { current: number, total: number }) => {

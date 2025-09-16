@@ -45,21 +45,12 @@ export class ManageBranchDishExtrasDialog implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try {
-      const extraBranchApiResponse = await firstValueFrom(this.extraService.getExtraBranchByBranchId(this.data.branchId));
+      const extraBranchDishApiResponse = await firstValueFrom(this.extraService.getExtraBranchDishAvailabilityInExtraBranches(this.data.branchId, this.data.branchDish.id));
 
-      for (const extraBranch of extraBranchApiResponse.extraBranches) {
-        try {
-          const extraApiResponse = await firstValueFrom(this.extraService.getExtraBranchDishByExtraBranchIdAndBranchDishId(extraBranch.id, this.data.branchDish.id));
-          extraApiResponse.extraBranchDish.changed = false;
-          this.extraBranchDishes = [...this.extraBranchDishes, extraApiResponse.extraBranchDish];
-        } catch {
-          const extraBranchDish: ExtraBranchDishDto = {} as ExtraBranchDishDto;
-          extraBranchDish.changed = false;
-          extraBranchDish.branchDish = this.data.branchDish;
-          extraBranchDish.extraBranch = extraBranch;
-          this.extraBranchDishes = [...this.extraBranchDishes, extraBranchDish];
-        }
+      for (const extraBranchDish of extraBranchDishApiResponse.extraBranchDishes) {
+        extraBranchDish.changed = false;
       }
+      this.extraBranchDishes = extraBranchDishApiResponse.extraBranchDishes;
       this.dataLoaded = true;
 
       this.socket.on('small-snackbar-updates', (data: { current: number, total: number }) => {

@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ExtraBranchDto} from '../../models/extra-branch.dto';
-import {BranchService} from '../../../core/services/branch/branch.service';
 import {ExtraService} from '../../services/extra/extra.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -30,7 +29,6 @@ export class ManageExtraBranchDialog implements OnInit {
   displayedColumns: string[] = ['branch', 'status', 'actions', 'manageDishes'];
 
   constructor(
-    private branchService: BranchService,
     private extraService: ExtraService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
@@ -39,21 +37,12 @@ export class ManageExtraBranchDialog implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      const branchApiResponse =  await firstValueFrom(this.branchService.getByRestaurantId(this.data.restaurantId));
+      const extraApiResponse =  await firstValueFrom(this.extraService.getExtraBranchAvailabilityInBranches(this.data.restaurantId, this.data.extra.id));
 
-      for (const branch of branchApiResponse.branches) {
-        try {
-          const extraApiResponse =  await firstValueFrom(this.extraService.getExtraBranchByExtraIdAndBranchId(this.data.extra.id, branch.id));
-          extraApiResponse.extraBranch.changed = false;
-          this.extraBranches = [...this.extraBranches, extraApiResponse.extraBranch];
-        } catch {
-          const extraBranch: ExtraBranchDto = {} as ExtraBranchDto;
-          extraBranch.changed = false;
-          extraBranch.branch = branch;
-          extraBranch.extra = this.data.extra;
-          this.extraBranches = [...this.extraBranches, extraBranch];
-        }
+      for (const extraBranch of extraApiResponse.extraBranches) {
+        extraBranch.changed = false;
       }
+      this.extraBranches = extraApiResponse.extraBranches;
       this.dataLoaded = true;
     } catch (error: any) {
       if (error.statusCode === 404) {

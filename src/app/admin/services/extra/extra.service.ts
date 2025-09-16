@@ -59,16 +59,24 @@ export class ExtraService extends Base<ExtraApiResponse>{
     }).pipe(catchError(this.handleError));
   }
 
-  getExtraBranchByExtraIdAndBranchId(extraId: number, branchId: number): Observable<ExtraApiResponse> {
-    return this.http.get<ExtraApiResponse>(`${this.basePath}/extra/${extraId}/branch/${branchId}`, {
+  getExtraBranchAvailabilityInBranches(restaurantId: number, extraId: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/restaurant/${restaurantId}/extra/${extraId}`, {
       headers: {
         'Content-Type': 'application/json',
       }
     }).pipe(catchError(this.handleError));
   }
 
-  getExtraBranchDishByExtraBranchIdAndBranchDishId(extraBranchId: number, branchDishId: number): Observable<ExtraApiResponse> {
-    return this.http.get<ExtraApiResponse>(`${this.basePath}/extraBranch/${extraBranchId}/branchDish/${branchDishId}`, {
+  getExtraBranchDishAvailabilityInExtraBranches(branchId: number, branchDishId: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/branch/${branchId}/branchDish/${branchDishId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).pipe(catchError(this.handleError));
+  }
+
+  getExtraBranchDishAvailabilityInBranchDishes(branchId: number, extraBranchId: number): Observable<ExtraApiResponse> {
+    return this.http.get<ExtraApiResponse>(`${this.basePath}/branch/${branchId}/extraBranch/${extraBranchId}`, {
       headers: {
         'Content-Type': 'application/json',
       }

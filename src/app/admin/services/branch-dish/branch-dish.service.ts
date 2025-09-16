@@ -16,8 +16,8 @@ export class BranchDishService extends Base<BranchDishApiResponse> {
     this.basePath = this.basePath + 'branches-dishes';
   }
 
-  getBranchDishByBranchIdAndDishId(branchId: number, dishId: number): Observable<BranchDishApiResponse> {
-    return this.http.get<BranchDishApiResponse>(`${this.basePath}/branch/${branchId}/dish/${dishId}`, {
+  getBranchDishAvailabilityInBranches(restaurantId: number, dishId: number): Observable<BranchDishApiResponse> {
+    return this.http.get<BranchDishApiResponse>(`${this.basePath}/restaurant/${restaurantId}/dish/${dishId}`, {
       headers: {
         'Content-Type': 'application/json',
       }
