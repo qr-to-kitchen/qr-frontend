@@ -89,7 +89,7 @@
       Seguir comprando
     </button>
     @if (addItems) {
-      <button matButton="filled" (click)="addItemsToOrder()" [disabled]="order.items.length == 0 || waiting">
+      <button matButton="tonal" (click)="addItemsToOrder()" [disabled]="order.items.length == 0 || waiting">
         Confirmar pedido
       </button>
       <div style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px; background: rgba(25, 118, 210, 0.08); color: #0d47a1;">
@@ -97,7 +97,7 @@
         <span>Al tener una orden en proceso estos platos se agregarán</span>
       </div>
     } @else {
-      <button matButton="filled" (click)="createOrder()" [disabled]="order.items.length == 0 || waiting">
+      <button matButton="tonal" (click)="createOrder()" [disabled]="order.items.length == 0 || waiting">
         Confirmar pedido
       </button>
     }

@@ -1,13 +1,18 @@
 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px;">
   @if (orderExists == 1) {
     <mat-card class="card">
-      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <mat-icon>receipt_long</mat-icon>
-        <mat-chip>{{ order.status }}</mat-chip>
-        <mat-chip>
-          <mat-icon matChipAvatar>table_restaurant</mat-icon>
-          Mesa {{ order.tableNumber }}
-        </mat-chip>
+      <div style="display: flex; justify-content: space-between">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <mat-icon>receipt_long</mat-icon>
+          <mat-chip>{{ order.status }}</mat-chip>
+          <mat-chip>
+            <mat-icon matChipAvatar>table_restaurant</mat-icon>
+            Mesa {{ order.tableNumber }}
+          </mat-chip>
+        </div>
+        <button matButton="filled" [routerLink]="['/menu', order.branch.id, order.tableNumber]">
+          Seguir comprando
+        </button>
       </div>
       <span>{{ order.description || 'Sin descripción' }}</span>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
@@ -151,7 +156,7 @@
         <mat-hint>Solicitar a cocina</mat-hint>
       </mat-form-field>
     </div>
-    <button matButton="filled" (click)="recoverOrder()" [disabled]="!selectedRestaurantId || !selectedBranchId || !tableNumber || !dailyCode || !orderId">
+    <button matButton="tonal" (click)="recoverOrder()" [disabled]="!selectedRestaurantId || !selectedBranchId || !tableNumber || !dailyCode || !orderId">
       Recuperar orden
     </button>
   }
