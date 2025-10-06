@@ -8,6 +8,10 @@
       <mat-icon matChipAvatar>table_restaurant</mat-icon>
       Mesa {{ data.order.tableNumber }}
     </mat-chip>
+    <mat-chip>
+      <mat-icon matChipAvatar>receipt_long</mat-icon>
+      Id {{ data.order.id }}
+    </mat-chip>
   </div>
   <mat-dialog-content style="display: flex; flex-direction: column; gap: 8px;">
     @if (data.order.description) {

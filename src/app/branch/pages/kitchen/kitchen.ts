@@ -12,6 +12,7 @@ import {OrderDetailDialog} from '../../dialogs/order-detail.dialog/order-detail.
 import {io, Socket} from 'socket.io-client';
 import {environment} from '../../../../environment/environment';
 import {BranchService} from '../../../core/services/branch/branch.service';
+import {BranchDto} from '../../../core/models/branch.dto';
 
 @Component({
   selector: 'app-kitchen',
@@ -23,6 +24,8 @@ export class Kitchen implements OnInit, OnDestroy {
   viewMode: string = 'board';
 
   branchId: number = 0;
+
+  branch: BranchDto = {} as BranchDto;
 
   ordersCreated: OrderDto[] = [];
   ordersCooking: OrderDto[] = [];
@@ -59,6 +62,7 @@ export class Kitchen implements OnInit, OnDestroy {
             }
           }
           this.branchId = userApiResponse.user.branch.id;
+          this.branch = userApiResponse.user.branch;
           this.refreshOrders();
 
           this.socket.emit('joinBranchRoom', this.branchId);
