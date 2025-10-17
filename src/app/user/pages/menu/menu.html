@@ -1,26 +1,26 @@
-<div style="height: 100%; display: flex; flex-direction: column; gap: 10px;">
-  <div style="display: flex; justify-content: space-between; padding: 10px; background: #ffffff;">
+<div class="page-background" style="height: 100%; display: flex; flex-direction: column; gap: 10px;">
+  <div style="display: flex; justify-content: space-between; padding: 10px; background: #ffffffD9;">
     <div style="display: flex; flex-direction: column;">
       <span style="font-weight: 700; font-size: 16px;">{{ branch.restaurant.name }}</span>
       <span style="font-size: 12px;">{{ branch.address }}</span>
     </div>
-    <button matButton="filled" [routerLink]="['/my-order']">
+    <button matButton="filled" [routerLink]="['/my-order']" style="background-color: #cd1c1c">
       <span>Ir a mi pedido</span>
     </button>
   </div>
-  <div style="position: sticky; top: 0; z-index: 10; background: #ffffff;">
+  <div style="position: sticky; top: 0; z-index: 10; background: #ffffffD9;">
     <div class="menu-categories__scroller">
       @for (cat of categories; track cat.id) {
         <button matButton="filled" style="flex: 0 0 auto; padding: 6px 12px; font-size: 13px;"
-                [style.background-color]="activeCategoryId === cat.id ? '#548fe4' : '#f0f1f3'" (click)="changeCategory(cat.id)">
-          {{ cat.name }}
+                [style.background-color]="activeCategoryId === cat.id ? '#cd1c1c' : '#ffffff'" (click)="changeCategory(cat.id)">
+          <span [style.color]="activeCategoryId === cat.id ? '#ffffff' : '#333333'">{{ cat.name }}</span>
         </button>
       }
     </div>
   </div>
   <div style="display: flex; flex-direction: column; gap: 10px; padding: 0 10px 5px;">
     @for (branchDish of branchesDishes; track branchDish.id) {
-      <div style="display: grid; grid-template-columns: 90px 1fr; padding: 10px; border-radius: 12px; background: #ffffff;">
+      <div style="display: grid; grid-template-columns: 90px 1fr; padding: 10px; border-radius: 12px; background: #ffffffD9;">
         <div style="display: flex; align-items: center; justify-content: center;">
           @if (branchDish.dish.imageUrl !== '') {
             <img [src]="branchDish.dish.imageUrl" alt="Imagen del plato" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"/>
@@ -38,7 +38,7 @@
           </div>
           <span style="font-size: 12px;">{{ branchDish.dish.description }}</span>
           <div style="display: flex; justify-content: flex-end;">
-            <button matButton="filled" (click)="onAddToCart(branchDish)">
+            <button matButton="filled" (click)="onAddToCart(branchDish)" style="background-color: #cd1c1c">
               <span>Agregar</span>
             </button>
           </div>
@@ -46,7 +46,7 @@
       </div>
     }
   </div>
-  <button matIconButton style="position: fixed; right: 16px; bottom: 16px; z-index: 10; background-color: #1e40af"
+  <button matIconButton style="position: fixed; right: 16px; bottom: 16px; z-index: 10; background-color: #cd1c1c"
           [matBadge]="cartLength" [matBadgeHidden]="cartLength == 0" matBadgePosition="before" [routerLink]="['/shopping-cart']">
     <mat-icon style="color: white">shopping_cart</mat-icon>
   </button>
