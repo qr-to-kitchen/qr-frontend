@@ -1,10 +1,10 @@
-<div class="page-background" style="height: 100%; display: flex; flex-direction: column; gap: 10px;">
+<div class="page-background" style="height: 100%; display: flex; flex-direction: column; gap: 10px;" [style.background-image]="this.backgroundImage ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${this.backgroundImage}')` : 'none'">
   <div style="display: flex; justify-content: space-between; padding: 10px; background: #ffffffD9;">
     <div style="display: flex; flex-direction: column;">
       <span style="font-weight: 700; font-size: 16px;">{{ branch.restaurant.name }}</span>
       <span style="font-size: 12px;">{{ branch.address }}</span>
     </div>
-    <button matButton="filled" [routerLink]="['/my-order']" style="background-color: #cd1c1c">
+    <button matButton="filled" [routerLink]="['/my-order']" [style.background-color]="primaryColor">
       <span>Ir a mi pedido</span>
     </button>
   </div>
@@ -12,7 +12,7 @@
     <div class="menu-categories__scroller">
       @for (cat of categories; track cat.id) {
         <button matButton="filled" style="flex: 0 0 auto; padding: 6px 12px; font-size: 13px;"
-                [style.background-color]="activeCategoryId === cat.id ? '#cd1c1c' : '#ffffff'" (click)="changeCategory(cat.id)">
+                [style.background-color]="activeCategoryId === cat.id ? primaryColor : '#ffffff'" (click)="changeCategory(cat.id)">
           <span [style.color]="activeCategoryId === cat.id ? '#ffffff' : '#333333'">{{ cat.name }}</span>
         </button>
       }
@@ -38,7 +38,7 @@
           </div>
           <span style="font-size: 12px;">{{ branchDish.dish.description }}</span>
           <div style="display: flex; justify-content: flex-end;">
-            <button matButton="filled" (click)="onAddToCart(branchDish)" style="background-color: #cd1c1c">
+            <button matButton="filled" (click)="onAddToCart(branchDish)" [style.background-color]="primaryColor">
               <span>Agregar</span>
             </button>
           </div>
@@ -46,7 +46,7 @@
       </div>
     }
   </div>
-  <button matIconButton style="position: fixed; right: 16px; bottom: 16px; z-index: 10; background-color: #cd1c1c"
+  <button matIconButton style="position: fixed; right: 16px; bottom: 16px; z-index: 10;" [style.background-color]="primaryColor"
           [matBadge]="cartLength" [matBadgeHidden]="cartLength == 0" matBadgePosition="before" [routerLink]="['/shopping-cart']">
     <mat-icon style="color: white">shopping_cart</mat-icon>
   </button>

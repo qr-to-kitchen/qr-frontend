@@ -14,6 +14,8 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AddToCartDialog} from '../../dialogs/add-to-cart.dialog/add-to-cart.dialog';
 import {OrderItemDto} from '../../../branch/models/order-item.dto';
 import {OrderAuxService} from '../../../shared/services/order-aux/order-aux.service';
+import {ConfigurationService} from "../../services/configuration/configuration.service";
+import {CommunicationService} from "../../../shared/services/communicacion/communication.service";
 
 @Component({
   selector: 'app-menu',
@@ -28,13 +30,17 @@ export class Menu implements OnInit {
 
   cartLength: number = 0;
 
+  primaryColor: string = '#1e40af';
+  backgroundImage: string = '';
+
   branch: BranchDto = {} as BranchDto;
 
   categories: CategoryDto[] = [];
   branchesDishes: BranchDishDto[] = [];
 
   constructor(private branchService: BranchService, private categoriesService: CategoryService,
-              private branchDishService: BranchDishService, private route: ActivatedRoute,
+              private branchDishService: BranchDishService, private configurationService: ConfigurationService,
+              private communicationService: CommunicationService, private route: ActivatedRoute,
               private snackBar: MatSnackBar, private dialog: MatDialog,
               private orderAuxService: OrderAuxService) {
     this.branch.restaurant = {} as RestaurantDto;
@@ -53,6 +59,16 @@ export class Menu implements OnInit {
       const categoryApiResponse = await firstValueFrom(this.categoriesService.getByRestaurantId(this.branch.restaurant.id));
       this.categories = categoryApiResponse.categories;
       this.activeCategoryId = this.categories[0].id;
+
+      try {
+        const configurationApiResponse = await firstValueFrom(this.configurationService.getByBranchId(this.branch.id));
+        this.primaryColor = configurationApiResponse.configuration.primaryColor;
+        this.backgroundImage = configurationApiResponse.configuration.backgroundImage;
+        this.communicationService.emitNavBarColorChange({ color: this.primaryColor });
+      } catch (error: any) {
+        this.primaryColor = '#1e40af';
+        this.backgroundImage = '';
+      }
 
       try {
         const branchDishApiResponse = await firstValueFrom(this.branchDishService.getByBranchIdAndCategoryId(this.branchId, this.activeCategoryId));

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {map, Observable} from 'rxjs';
 import {StepperOrientation} from '@angular/cdk/stepper';
 import {BreakpointObserver} from '@angular/cdk/layout';
@@ -9,6 +9,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorMessage} from '../../../shared/models/error-message';
 import {ErrorSnackBar} from '../../../shared/pages/error-snack-bar/error-snack-bar';
 import {Router} from '@angular/router';
+import {CommunicationService} from "../../../shared/services/communicacion/communication.service";
 
 @Component({
   selector: 'app-forget-password',
@@ -16,7 +17,7 @@ import {Router} from '@angular/router';
   templateUrl: './forget-password.html',
   styleUrl: './forget-password.css'
 })
-export class ForgetPassword {
+export class ForgetPassword implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   stepperOrientation: Observable<StepperOrientation> = this.breakpointObserver
     .observe('(min-width: 800px)')
@@ -28,7 +29,12 @@ export class ForgetPassword {
   isCodeVerified: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef, private verificationService: VerificationService,
-              private snackBar: MatSnackBar, private router: Router,) { }
+              private communicationService: CommunicationService, private snackBar: MatSnackBar,
+              private router: Router,) { }
+
+  ngOnInit(): void {
+    this.communicationService.emitNavBarColorChange({ color: '#1e40af' });
+  }
 
   onSendCode(stepper: MatStepper) {
     this.snackBar.open('Enviando código a correo');
