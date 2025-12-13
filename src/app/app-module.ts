@@ -73,6 +73,7 @@ import { CreateBranchDishesDialog } from './admin/dialogs/create-branch-dishes.d
 import { CreateExtraBranchesDialog } from './admin/dialogs/create-extra-branches.dialog/create-extra-branches.dialog';
 import { ManageRestaurants } from './super-admin/pages/manage-restaurants/manage-restaurants';
 import { CreateUserRestaurantDialog } from './super-admin/dialogs/create-user-restaurant.dialog/create-user-restaurant.dialog';
+import { IzipayPayment } from './payment/pages/izipay-payment/izipay-payment';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { CreateUserRestaurantDialog } from './super-admin/dialogs/create-user-re
     CreateBranchDishesDialog,
     CreateExtraBranchesDialog,
     ManageRestaurants,
-    CreateUserRestaurantDialog
+    CreateUserRestaurantDialog,
+    IzipayPayment
   ],
   imports: [
     BrowserModule,

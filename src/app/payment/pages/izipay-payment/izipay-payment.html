@@ -1,0 +1,55 @@
+<div class="payment-container">
+  <div class="payment-header">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Pago con Izipay</h1>
+  </div>
+
+  <div class="payment-content">
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <p>Cargando formulario de pago...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage && !isLoading" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ errorMessage }}</p>
+      <button mat-raised-button color="primary" (click)="goBack()">
+        Volver al inicio
+      </button>
+    </div>
+
+    <!-- Izipay Form Container -->
+    <div class="form-wrapper" [class.hidden]="isLoading || errorMessage">
+      <mat-card>
+        <mat-card-content>
+          <div class="izipay-embedded" id="izipay-form-container">
+            <!-- Izipay SmartForm will be injected here -->
+            <div class="kr-smart-form" kr-card-form-expanded="true">
+              <div class="kr-pan"></div>
+              <div class="kr-expiry"></div>
+              <div class="kr-security-code"></div>
+
+              <button class="kr-payment-button"></button>
+
+              <!-- Payment form error messages -->
+              <div class="kr-form-error"></div>
+            </div>
+          </div>
+
+          <div class="payment-info">
+            <mat-divider></mat-divider>
+            <p class="info-text">
+              <mat-icon>info</mat-icon>
+              Este es un formulario de prueba para la integración con Izipay.
+              Asegúrate de configurar tu clave pública (PUBLIC_KEY) en el componente.
+            </p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
