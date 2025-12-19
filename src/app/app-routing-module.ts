@@ -24,6 +24,7 @@ import {BranchDetailDishes} from './admin/pages/branch-detail-dishes/branch-deta
 import {BranchDetailExtras} from './admin/pages/branch-detail-extras/branch-detail-extras';
 import {NoTokenGuard} from './security/guard/no-token-guard';
 import {ManageRestaurants} from './super-admin/pages/manage-restaurants/manage-restaurants';
+import {IzipayPayment} from './payment/pages/izipay-payment/izipay-payment';
 
 const routes: Routes = [
   { path: 'login', component: Login, canActivate: [NoTokenGuard] },
@@ -51,6 +52,8 @@ const routes: Routes = [
   //SuperAdmin
   { path: 'createQr', component: CreateQr },
   { path: 'manage-restaurants', component: ManageRestaurants },
+  //Payment
+  { path: 'izipay-payment', component: IzipayPayment },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFound }
