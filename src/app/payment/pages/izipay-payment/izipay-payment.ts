@@ -15,9 +15,12 @@ export class IzipayPayment implements OnInit, OnDestroy {
   isLoading = true;
   errorMessage = '';
 
-  // TODO: Replace with your actual Izipay credentials
-  private readonly PUBLIC_KEY = 'YOUR_IZIPAY_PUBLIC_KEY';
-  private readonly ENDPOINT = 'https://api.micuentaweb.pe'; // Production endpoint
+  // Izipay credentials - Store ID: 12474917
+  // TEST mode key (use this for testing)
+  private readonly PUBLIC_KEY = '12474917:testpublickey_NbPq0bFvP2tRjmBVVgsPWL9Mlb2kvyxXOaapKOU84AMOM';
+  // PRODUCTION mode key (uncomment when ready for production)
+  // private readonly PUBLIC_KEY = '12474917:publickey_Ovlo84Vin8BhX6dzVlQGrovV1zhVv1rc7CuGEXXW1YECDX';
+  private readonly ENDPOINT = 'https://api.micuentaweb.pe';
 
   constructor(
     private router: Router,
